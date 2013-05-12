@@ -7,7 +7,29 @@
 
 class Now_playing_movie extends CI_Model
 {
-    
+    /**
+     * 基本字段
+     */
+    var  $id = ''; 
+    var  $d_id = ''; 
+    var  $author = ''; 
+    var  $alt_title = ''; 
+    var  $rating = ''; 
+    var  $title = ''; 
+    var  $summary = ''; 
+    var  $pubdate = ''; 
+    var  $language = ''; 
+    var  $website = ''; 
+    var  $country = ''; 
+    var  $writer = ''; 
+    var  $director = ''; 
+    var  $cast = ''; 
+    var  $movie_duration = ''; 
+    var  $year = ''; 
+    var  $movie_type = ''; 
+    var  $tags = ''; 
+    var  $city_id = ''; 
+     
     //database  first_cinema 
     const __DATABASE= 'first_cinema';
     const __TABLE= 'fc_now_playing_movie';
@@ -18,19 +40,44 @@ class Now_playing_movie extends CI_Model
     }
 
     /**
-     * @param $d_id 豆瓣ID
+     * check d_id is exist
      */
-    public function isExistMovie($movie_id)
+    public function isExistMovie()
     {
-        $sql = "SELECT id FROM " . self::__TABLE . " WHERE d_id = " . $movie_id;
-        $query = $this->db->query($sql);
-        $row = $query->row_array();
-        if(count($row))
+        $where_data = array(
+            'd_id' => $this->d_id,
+            'city_id' => $this->city_id,
+        );
+        $query = $this->db->get_where(self::__TABLE, $where_data, 1);
+        $result = $query->result();
+        if(count($result))
         {
             return true;
         }
         return false;
     }
 
+    /**
+     * update create time
+     */
+    public function updateCreateTime()
+    {
+        $data = array(
+            'create_time' => 'CURRENT_TIMESTAMP',
+        );
+        $where_data = array(
+            'd_id' => $this->d_id,
+        );
+        $this->db->update(self::__TABLE, $data, $where_data);
+        
+    }
 
+    /**
+     * insert movie data
+     */
+    public function insertMovieData()
+    {
+        $this->db->insert(self::__TABLE, $this);
+        
+    }
 }

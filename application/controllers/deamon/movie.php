@@ -13,7 +13,7 @@ class Movie extends CI_Controller {
     const MOVIE_DETAIL_URL = 'https://api.douban.com/v2/movie/';
 
     public $movie_arr   = array();
-    //public $allow_field = array('author','alt_title','rating','title','summary','pubdate','language','website','country','writer','director','cast','movie_duration','year','movie_type','tags');
+
     public $allow_field = array('author','alt_title','rating','title','summary', 'attrs', 'tags');
     public $allow_attrs_field = array('website','country','writer','director','cast','pubdate','language','movie_duration','year','movie_type');
 
@@ -33,8 +33,9 @@ class Movie extends CI_Controller {
     {
         if(!empty($this->all_city))
         {
-            foreach ($this->all_city as $cn_name)
+            foreach ($this->all_city as $city_id => $cn_name)
             {
+                $this->city_id = $city_id;
                 $this->__getContents(self::NOWPLAY_URL, $cn_name); 
                 $this->__pregMatchAll();
                 $this->__disposePregData();
@@ -58,7 +59,7 @@ class Movie extends CI_Controller {
      **/
     private function __getAllCity()
     {
-        $this->all_city = array('beijing');
+        $this->all_city = array(108288 => 'beijing');
     }
 
     /**
@@ -77,7 +78,8 @@ class Movie extends CI_Controller {
 
     private function __disposePregData()
     {
-        $this->load->model('Now_playing_movie','movie',TRUE);
+        $this->load->model('Now_playing_movie','now_playing_movie',TRUE);
+        
         foreach($this->preg_data[1] as $movie_id)
         {
             if(is_numeric($movie_id))
@@ -85,15 +87,20 @@ class Movie extends CI_Controller {
                 $this->movie_id = $movie_id;
                 $this->__getDetailContents();
                 $this->__disposeDetailData();
-                var_dump($this->movie->isExistMovie($movie_id));die;
-                if($this->now_playing_movie->isExistMovie($movie_id))
+                $this->now_playing_movie->d_id = $this->movie_id;
+                $this->now_playing_movie->city_id = $this->city_id;
+                $this->now_playing_movie->insertMovieData();
+                /*
+                if(!$this->now_playing_movie->isExistMovie())
                 {
-                    //TODO update
+                    //update create time
+                    $this->now_playing_movie->updateCreateTime();die;
                 }
                 else
                 {
-
+                    $this->now_playing_movie->insertMovieData();
                 }
+                 */
             }    
         }
     }
@@ -114,7 +121,6 @@ class Movie extends CI_Controller {
     private function __disposeDetailData()
     {
         $this->get_detail_contents = json_decode($this->get_detail_contents);
-        //        var_dump($this->get_detail_contents);die;
         foreach($this->get_detail_contents as $key_name => $value)
         {
             if(in_array($key_name, $this->allow_field))
@@ -123,7 +129,7 @@ class Movie extends CI_Controller {
                 $tags_arr    = array();
                 if($key_name == 'rating')
                 {
-                    $this->movie_arr[$key_name] = $value->average;
+                    $this->now_playing_movie->$key_name = $value->average;
                     continue;
                 }
                 if($key_name == 'author')
@@ -132,7 +138,7 @@ class Movie extends CI_Controller {
                     {
                         array_push($author_arr, $authors->name);
                     }
-                    $this->movie_arr[$key_name] = implode(",", $author_arr); 
+                    $this->now_playing_movie->$key_name = implode(",", $author_arr); 
                     continue;
                 }
                 if($key_name == 'tags')
@@ -141,7 +147,7 @@ class Movie extends CI_Controller {
                     {
                         array_push($tags_arr, $tags->name);
                     }
-                    $this->movie_arr[$key_name] = implode(",", $tags_arr); 
+                    $this->now_playing_movie->$key_name = implode(",", $tags_arr); 
                     continue;
                 }
                 if($key_name == 'attrs')
@@ -155,12 +161,12 @@ class Movie extends CI_Controller {
                             {
                                 array_push($attr_arr, $field_detail);
                             }
-                            $this->movie_arr[$attr_key] = implode(",", $attr_arr); 
+                            $this->now_playing_movie->$attr_key = implode(",", $attr_arr); 
                         }
                     }
                     continue;
                 }
-                $this->movie_arr[$key_name] = $value;
+                $this->now_playing_movie->$key_name = $value;
             }
 
         }

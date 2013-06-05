@@ -9,17 +9,28 @@ set_time_limit(0);
  */
 class City extends CI_Controller {
 
+    //get city url
     const CITY_URL = 'http://movie.douban.com/nowplaying/beijing/';
+    //get area url
     const AREA_URL = "http://movie.douban.com/subject/3231742/cinema/";
 
     public function index()
     {
-        $this->__getAllCity();   
+        $this->load->model('City_List');
+        $this->__getAllCity();
+        $this->__disposeCityData();
+        $this->__getCityNames();
+        $this->__getAreaInfo();
     }
 
+    /**
+     * __getAllCity
+     *
+     * get all city info
+     */  
     private function __getAllCity()
     {
-        $allInfoArray = array();
+        $this->allCityArray = array();
         $content = file_get_contents(self::CITY_URL);
         $reg = "/<dl class=\"city-mod\">(.+?)<\/dl>/is";
         $regid = "/<span><a[^>].+? id=\"(.+?)\".+?>.+?<\/a><\/span>/is";
@@ -29,31 +40,33 @@ class City extends CI_Controller {
 
         preg_match_all($reg,$content,$match);
         $cityStrArray = $match[1];
-        foreach($cityStrArray as $v){
+        foreach($cityStrArray as $v)
+        {
             //获取A,B,C,D
             preg_match($regchar,$v,$match);
             $charkey = $match[1];
             //获取豆瓣城市ID
             preg_match_all($regid,$v,$match);
-            $allInfoArray[$charkey]['id'] = $match[1];
-
+            $this->allCityArray[$charkey]['id'] = $match[1];
             //获取豆瓣城市拼音
             preg_match_all($reguid,$v,$match);
-            $allInfoArray[$charkey]['zh_name'] = $match[1];
+            $this->allCityArray[$charkey]['zh_name'] = $match[1];
             //获取豆瓣城市名称
             preg_match_all($regname,$v,$match);
-            $allInfoArray[$charkey]['name'] = $match[1];
+            $this->allCityArray[$charkey]['name'] = $match[1];
         }
-        $this->__disposeCityData($allInfoArray);
-        $this->__getCityNames();
-        $this->__getAreaInfo();
     }
 
+    /**
+     *  __getAreaInfo
+     *
+     *  get all area info
+     */
     private function __getAreaInfo()
     {
         foreach($this->names_data as $name_detail)
         {
-            $allInfoArray = array();
+            $this->allAreaArray = array();
             $content = file_get_contents(self::AREA_URL . $name_detail->zh_name . '/');
             $reg = "/<ul[^>]id=\"zone-id\" data-zone-id=\"None\">(.+?)<\/ul>/si";
             $regid = "/<li><a[^>].*?data-zone=\"(.+?)\".*?>.*?<\/a><\/li>/is";
@@ -64,47 +77,63 @@ class City extends CI_Controller {
 
             //获取豆瓣区域ID
             preg_match_all($regname,$content,$match);
-            $allInfoArray['name'] = $match[1];
+            $this->allAreaArray['name'] = $match[1];
 
             //获取豆瓣区域ID
             preg_match_all($regid,$content,$match);
-            $allInfoArray['id'] = $match[1];
-            $this->__disposeAreaData($allInfoArray, $name_detail->id);
+            $this->allAreaArray['id'] = $match[1];
+            $this->__disposeAreaData($name_detail->id);
             sleep(20);
         }
 
 
     }
-    private function __disposeCityData($data_arr)
+
+    /**
+     * __disposeCityData
+     *
+     * dispose city data and insert Database
+     */
+    private function __disposeCityData()
     {
-        $this->load->model('City_List');
-        
-        foreach($data_arr as $city_detail)
+        foreach($this->allCityArray as $city_detail)
         {
-           foreach($city_detail['id'] as $subscript => $value) 
-           {
+            foreach($city_detail['id'] as $subscript => $value) 
+            {
                 $this->City_List->d_c_id = $value;
                 $this->City_List->name = $city_detail['name'][$subscript];
                 $this->City_List->zh_name = $city_detail['zh_name'][$subscript];
-                $this->City_List->insertCityData();
-           }
+//                $this->City_List->insertCityData();
+            }
         }
     }
+
+    /**
+     * __getCityNames
+     * 
+     * select city list for database
+     */
     private function __getCityNames()
     {
-        $this->load->model('City_List');
-        $this->names_data = $this->City_List->selectCityNames();
+        $this->City_List->field_str = 'zh_name, id';
+        $this->names_data = $this->City_List->selectCityInfoByField();
     }
 
-    private function __disposeAreaData($data_arr, $parent_id)
+    /**
+     * __disposeAreaData
+     *
+     * @param integer $parent_id area parent id
+     *
+     * dispose area data and insert Database
+     */
+    private function __disposeAreaData($parent_id)
     {
-        $this->load->model('City_List');
-           foreach($data_arr['id'] as $subscript => $value) 
-           {
-                $this->City_List->d_c_id = $value;
-                $this->City_List->name = $data_arr['name'][$subscript];
-                $this->City_List->parent_id = $parent_id;
-                $this->City_List->insertCityData();
-           }
+        foreach($this->allAreaArray['id'] as $subscript => $value) 
+        {
+            $this->City_List->d_c_id = $value;
+            $this->City_List->name = $this->allAreaArray['name'][$subscript];
+            $this->City_List->parent_id = $parent_id;
+  //          $this->City_List->insertCityData();
+        }
     }
 }

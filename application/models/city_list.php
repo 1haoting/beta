@@ -33,9 +33,9 @@ class City_List extends CI_Model
         $this->db->insert(self::__TABLE, $this);
     }
 
-    public function selectCityNames()
+    public function selectCityInfoByField()
     {
-        $this->db->select('zh_name, id');
+        $this->db->select($this->field_str);
         $query = $this->db->get(self::__TABLE);
         $data = $query->result();
 

@@ -2,7 +2,7 @@
 
 /**
  * Maps to the following URL
- *      http://example.com/dmovie
+ * http://example.com/dmovie
  *
  * @author Leo (haojianping) $
  *
@@ -18,11 +18,6 @@ class Movie extends CI_Controller {
     public $allow_attrs_field = array('website','country','writer','director','cast','pubdate','language','movie_duration','year','movie_type');
 
     public function index()
-    {
-        $this->__process();   
-    }
-
-    private function __process()
     {
         $this->__pregStr();
         $this->__getAllCity();
@@ -45,27 +40,33 @@ class Movie extends CI_Controller {
 
     /**
      * preg match str
-     * @$this->preg_str
-     **/
+     *
+     * @return obj $this->preg_str
+     */
     private function __pregStr()
     {
         $this->preg_str = '/<a class="thumb" href="http:\/\/movie.douban.com\/subject\/(.+?)\/"><img [^>].+?\/><\/a>/is';
-
     }
 
     /**
      * get all city 
-     * @beijing shanghai ...
-     **/
+     *
+     * @beijing shanghai
+     */
     private function __getAllCity()
     {
+        $this->load->model('City_List');
+        $this->City_List->field_str = 'id, d_c_id, zh_name';
+        $this->city_data = $this->City_List->selectCityInfoByField();
+        var_dump($this->city_data);die;
         $this->all_city = array(108288 => 'beijing');
     }
 
     /**
      * get nowplaying movie id  on city
+     *
      * @http://movie.douban.com/nowplaying/beijing
-     **/
+     */
     private function __getContents($url, $cn_name)
     {
         $this->get_contents = file_get_contents($url . $cn_name);
@@ -79,7 +80,7 @@ class Movie extends CI_Controller {
     private function __disposePregData()
     {
         $this->load->model('Now_playing_movie','now_playing_movie',TRUE);
-        
+
         foreach($this->preg_data[1] as $movie_id)
         {
             if(is_numeric($movie_id))

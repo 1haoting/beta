@@ -1,4 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+set_time_limit(0);
 
 /**
  * Maps to the following URL
@@ -19,21 +20,24 @@ class Movie extends CI_Controller {
 
     public function index()
     {
+        $this->nums = 20;
         $this->__pregStr();
         $this->__getAllCity();
-        $this->__capture();
     }
 
     private function __capture()
     {
         if(!empty($this->all_city))
         {
-            foreach ($this->all_city as $city_id => $cn_name)
+            foreach ($this->all_city[0] as $local_city_id => $simple_city_info)
             {
-                $this->city_id = $city_id;
-                $this->__getContents(self::NOWPLAY_URL, $cn_name); 
-                $this->__pregMatchAll();
-                $this->__disposePregData();
+                foreach ($simple_city_info as $d_city_id => $cn_name)
+                {
+                    $this->city_id = $d_city_id;
+                    $this->__getContents(self::NOWPLAY_URL, $cn_name); 
+                    $this->__pregMatchAll();
+                    $this->__disposePregData();
+                }
             }
         }
     }
@@ -45,7 +49,8 @@ class Movie extends CI_Controller {
      */
     private function __pregStr()
     {
-        $this->preg_str = '/<a class="thumb" href="http:\/\/movie.douban.com\/subject\/(.+?)\/"><img [^>].+?\/><\/a>/is';
+        $this->preg_str = '/<div[^>].*?class=\"lists\">(.*?)<\/div>/is';
+        $this->preg_hrefstr = '/<a.*?href="http:\/\/movie.douban.com\/subject\/(.+?)\/.*?"><img [^>].+?\/><\/a>/is';
     }
 
     /**
@@ -55,11 +60,19 @@ class Movie extends CI_Controller {
      */
     private function __getAllCity()
     {
+        $this->all_city = array();
         $this->load->model('City_List');
         $this->City_List->field_str = 'id, d_c_id, zh_name';
         $this->city_data = $this->City_List->selectCityInfoByField();
-        var_dump($this->city_data);die;
-        $this->all_city = array(108288 => 'beijing');
+        if(!empty($this->city_data))
+        {
+            foreach($this->city_data as $data_info)
+            {
+                $temp_arr[$data_info->id] = array($data_info->d_c_id => $data_info->zh_name);
+                array_push($this->all_city, $temp_arr);
+                $this->__capture();
+            }
+        }
     }
 
     /**
@@ -74,7 +87,8 @@ class Movie extends CI_Controller {
 
     private function __pregMatchAll()
     {
-        preg_match_all($this->preg_str,$this->get_contents,$this->preg_data);
+        preg_match($this->preg_str,$this->get_contents,$this->preg_datas);
+        preg_match_all($this->preg_hrefstr,$this->preg_datas[1],$this->preg_data);
     }
 
     private function __disposePregData()
@@ -85,23 +99,32 @@ class Movie extends CI_Controller {
         {
             if(is_numeric($movie_id))
             {
-                $this->movie_id = $movie_id;
-                $this->__getDetailContents();
-                $this->__disposeDetailData();
-                $this->now_playing_movie->d_id = $this->movie_id;
-                $this->now_playing_movie->city_id = $this->city_id;
-                $this->now_playing_movie->insertMovieData();
-                /*
-                if(!$this->now_playing_movie->isExistMovie())
+                if($this->nums > 0)
                 {
-                    //update create time
-                    $this->now_playing_movie->updateCreateTime();die;
+                    $this->movie_id = $movie_id;
+                    $this->__getDetailContents();
+                    $this->__disposeDetailData();
+                    $this->now_playing_movie->d_id = $this->movie_id;
+                    $this->now_playing_movie->city_id = $this->city_id;
+                    $this->now_playing_movie->insertMovieData();
+                /*
+                    if(!$this->now_playing_movie->isExistMovie())
+                    {
+                        //update create time
+                        $this->now_playing_movie->updateCreateTime();die;
+                    }
+                    else
+                    {
+                        $this->now_playing_movie->insertMovieData();
+                    }
+                 */
+                    $this->nums = $this->nums - 1;
                 }
                 else
                 {
-                    $this->now_playing_movie->insertMovieData();
+                    sleep(60);
+                    $this->nums = 20;
                 }
-                 */
             }    
         }
     }

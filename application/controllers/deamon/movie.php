@@ -20,7 +20,7 @@ class Movie extends CI_Controller {
 
     public function index()
     {
-        $this->nums = 20;
+        $this->nums = 10;
         $this->__pregStr();
         $this->__getAllCity();
     }
@@ -29,13 +29,17 @@ class Movie extends CI_Controller {
     {
         if(!empty($this->all_city))
         {
-            foreach ($this->all_city[0] as $local_city_id => $simple_city_info)
+            foreach ($this->all_city as $d_city_id => $cn_name)
             {
-                foreach ($simple_city_info as $d_city_id => $cn_name)
+                $this->city_id = $d_city_id;
+                $this->__getContents(self::NOWPLAY_URL, $cn_name); 
+                $this->__pregMatchAll();
+                if(empty($this->preg_data))
                 {
-                    $this->city_id = $d_city_id;
-                    $this->__getContents(self::NOWPLAY_URL, $cn_name); 
-                    $this->__pregMatchAll();
+                    continue;
+                }
+                else
+                {
                     $this->__disposePregData();
                 }
             }
@@ -68,8 +72,7 @@ class Movie extends CI_Controller {
         {
             foreach($this->city_data as $data_info)
             {
-                $temp_arr[$data_info->id] = array($data_info->d_c_id => $data_info->zh_name);
-                array_push($this->all_city, $temp_arr);
+                $this->all_city = array($data_info->d_c_id => $data_info->zh_name);
                 $this->__capture();
             }
         }
@@ -87,14 +90,23 @@ class Movie extends CI_Controller {
 
     private function __pregMatchAll()
     {
-        preg_match($this->preg_str,$this->get_contents,$this->preg_datas);
-        preg_match_all($this->preg_hrefstr,$this->preg_datas[1],$this->preg_data);
+        $find_str='你所在的城市没有影讯覆盖';
+        if(strpos($this->get_contents, $find_str) == false)
+        {
+            preg_match($this->preg_str,$this->get_contents,$this->preg_datas);
+            preg_match_all($this->preg_hrefstr,$this->preg_datas[1],$this->preg_data);
+        }
+        else
+        {
+            $this->preg_data = array();
+        }
     }
 
     private function __disposePregData()
     {
         $this->load->model('Now_playing_movie','now_playing_movie',TRUE);
 
+        array_shift($this->preg_data[1]);
         foreach($this->preg_data[1] as $movie_id)
         {
             if(is_numeric($movie_id))
@@ -104,7 +116,7 @@ class Movie extends CI_Controller {
                     $this->movie_id = $movie_id;
                     $this->__getDetailContents();
                     $this->__disposeDetailData();
-                    $this->now_playing_movie->d_id = $this->movie_id;
+                    $this->now_playing_movie->d_id = $movie_id;
                     $this->now_playing_movie->city_id = $this->city_id;
                     $this->now_playing_movie->insertMovieData();
                 /*
@@ -122,8 +134,8 @@ class Movie extends CI_Controller {
                 }
                 else
                 {
-                    sleep(60);
-                    $this->nums = 20;
+                    sleep(61);
+                    $this->nums = 10;
                 }
             }    
         }

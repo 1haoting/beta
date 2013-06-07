@@ -36,6 +36,7 @@ class City_List extends CI_Model
     public function selectCityInfoByField()
     {
         $this->db->select($this->field_str);
+        $this->db->where('id >', '56'); 
         $query = $this->db->get(self::__TABLE);
         $data = $query->result();
 

@@ -80,4 +80,18 @@ class Now_playing_movie extends CI_Model
         $this->db->insert(self::__TABLE, $this);
         
     }
+
+    /**
+     * get movie detail by movie id 
+     */
+    public function getMovieDetailByMovieId()
+    {
+        $where_data = array(
+            'd_id' => $this->d_id,
+            'city_id' => $this->city_id,
+        );
+        $query = $this->db->get_where(self::__TABLE, $where_data, 1);
+        $result = $query->result();
+        return $result;
+    }
 }

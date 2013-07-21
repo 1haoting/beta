@@ -42,6 +42,7 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['deamon/movie'] = 'deamon/movie';
 $route['deamon/mdetail'] = 'deamon/mdetail';
+$route['movie/(:any)'] = 'MovieDetail/dispose/$1/$2';
 
 
 /* End of file routes.php */

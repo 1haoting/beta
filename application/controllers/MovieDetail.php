@@ -30,7 +30,7 @@ class MovieDetail extends CI_Controller {
 
 	public function showView()
 	{
-        $this->assign('test',$this->movieInfo[0]->author);
-        $this->display('movie_detail.html');
+        $this->smarty->assign('test',$this->movieInfo[0]->author);
+        $this->smarty->view('movie_detail.html');
 	}
 }

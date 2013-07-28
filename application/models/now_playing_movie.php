@@ -94,4 +94,32 @@ class Now_playing_movie extends CI_Model
         $result = $query->result();
         return $result;
     }
+
+    /**
+     * get movie list by city id
+     */
+    public function getMovieDetailByCityId()
+    {
+        $where_data = array(
+            'city_id' => $this->city_id,
+        );
+        $query = $this->db->get_where(self::__TABLE, $where_data);
+        $result = $query->result();
+        return $result;
+    }
+
+    /**
+     * get movie list by city id order by rating
+     */
+    public function getTopMovieByCityId()
+    {
+        $where_data = array(
+            'city_id' => $this->city_id,
+        );
+        $this->db->select('rating, title, director, cast');
+        $this->db->order_by("rating", "desc");
+        $query = $this->db->get_where(self::__TABLE, $where_data, 10);
+        $result = $query->result();
+        return $result;
+    }
 }

@@ -32,37 +32,37 @@
 <div class="movie_tp left"><img src="{$base_url}images/06.jpg" /></div>
 <div class="movie_txt right">
 <div class="video_top">
-<h1>致我们终将逝去的青春<span>正在上映</span></h1>
-<div class="movie_btn_div clearfix"><a class="gp left" href="#">比价购票</a><a class="sc left" href="#">收藏<span>（1025人）</span></a><a class="kg left" href="#">看过<span>（1025人）</span></a><span class="right num">9.0</span></div>
+<h1>{$movieInfo->alt_title}<span>正在上映</span></h1>
+<div class="movie_btn_div clearfix"><a class="gp left" href="#">比价购票</a><a class="sc left" href="#">收藏<span>（1025人）</span></a><a class="kg left" href="#">看过<span>（1025人）</span></a><span class="right num">{$movieInfo->rating}</span></div>
 </div>
 
 <div class="movie_left left">
 <h1>影片阵容</h1>
 <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
-    <td>导演：赵薇</td>
+    <td>导演：{$movieInfo->director}</td>
   </tr>
   <tr>
   <td>
   <table width="100%" border="0" cellspacing="0" cellpadding="0">
   <tr>
     <td width="36">主演：</td>
-    <td>韩庚 赵又廷 杨子珊 江疏影 林更新 安又琪 郑恺 黄明 佟丽娅...</td>
+    <td>{$movieInfo->cast}</td>
    </tr>
    </table>
   </td>
   </tr>
   <tr>
-    <td>地区：内地</td>
+    <td>制片国家/地区 {$movieInfo->country}</td>
   </tr>
   <tr>
-    <td>类型：爱情</td>
+    <td>类型：{$movieInfo->movie_type}</td>
   </tr>
   <tr>
-    <td>上映时间：2013.04.26</td>
+    <td>上映时间: {$movieInfo->pubdate}</td>
   </tr>
   <tr>
-    <td>片长：130分钟</td>
+    <td>片长：{$movieInfo->movie_duration}</td>
   </tr>
 </table>
 
@@ -70,7 +70,7 @@
 
 <div class="movie_right right">
 <h1>剧情介绍</h1>
-<p>"玉面小飞龙"的郑微，洋溢着青春活力，心怀着对邻家哥哥--林静浓浓的爱意，来到大学，认识了自己最要好的朋友——阮阮。可是当她联系林静的时候，却发现突然出国的林静并没有告诉她任何消息。而这时，家中又遭到重大变故，父母离异，原因竟然是她的妈妈和林静的爸爸互相爱慕。生性豁达的她埋藏起自己的爱情，享受大学时代的快乐生活。却在一场闹剧后，意外地爱上同学校的陈孝正，经历种种坎坷，郑薇终于和陈孝正在一起了。板正自闭、敏感自尊、家庭贫困的陈孝正却在毕业的时候选择了出国留学，放弃了郑微。三年后，林静和陈孝正都出现在郑微面前，而工作后的郑微也纠葛在工作、感情甚至阴谋之中。郑微感情的天平，会倾向于哪一个呢？</p>
+<p>{$movieInfo->summary}</p>
 </div>
 
 </div>

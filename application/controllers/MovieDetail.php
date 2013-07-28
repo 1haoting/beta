@@ -26,12 +26,22 @@ class MovieDetail extends CI_Controller {
 		$this->now_playing_movie->d_id = $this->movieId;
 		$this->now_playing_movie->city_id = $this->cityId;
 		$this->movieInfo = $this->now_playing_movie->getMovieDetailByMovieId();
+		$this->movieInfo[0]->summary = $this->_filterString($this->movieInfo[0]->summary, 900);	
+		$this->movieInfo[0]->cast = $this->_filterString($this->movieInfo[0]->cast, 100);
 	}
 
 	public function showView()
 	{
 		$this->smarty->assign('base_url', base_url());
-        $this->smarty->assign('test',$this->movieInfo[0]->author);
+        $this->smarty->assign('movieInfo',$this->movieInfo[0]);
         $this->smarty->view('movie_detail.html');
+	}
+
+	private function _filterString($data, $num)
+	{
+		if (strlen($data) > $num) {
+			$data = substr($data, 0, $num) . "...";
+		}
+		return $data;
 	}
 }

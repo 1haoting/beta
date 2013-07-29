@@ -49,7 +49,7 @@
 {foreach from=$movieList item=movieInfo}
 <dl class="movie_dl">
   <dt>
-    <a href="#"><img src="{$base_url}images/02.jpg" /><i></i>
+    <a href="#"><img src="{$base_url}images/{$movieInfo->d_id}image.jpg" /><i></i>
       <div>
         <p>{$movieInfo->title}</p>
         <p>已有<span class="orange">1235</span>人比价</p>

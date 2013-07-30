@@ -130,7 +130,7 @@ body{behavior:url(skin/csshover.htc);}
 .movie_hot_tt a:hover{color:#990000;}
 .movie_hot_tt em{font-style:normal; float:right;line-height:30px; color:#cc3300;}
 .ranking_ul li.on{height:90px;}
-.ranking_ul li.on p{display:block;}
+.ranking_ul li.on p{display:block;width: 65px;}
 .ranking_ul li.on b{height:90px; line-height:90px; background:#990000; font-family:Verdana;}
 .ranking_ul li.on .movie_hot_tt{width:120px;}
 .ranking_ul li.on .movie_hot_tt a{width:100px;}

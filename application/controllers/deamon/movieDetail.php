@@ -39,9 +39,12 @@ class MovieDetail extends CI_Controller {
                 $detailContents = file_get_contents(self::MOVIE_DETAIL_URL . $movieInfo->d_id);
                 $detailContents = substr($detailContents, 0, -1);
                 $detailContents = json_decode($detailContents);
-                $imageUrl = $detailContents->images->large;
-                $fileName = $movieInfo->d_id . 'image.jpg';
-                $this->getMovieImage($imageUrl, $fileName);
+                $largeImageUrl = $detailContents->images->large;
+                $largeFileName = $movieInfo->d_id . '_large.jpg';
+                $this->getMovieImage($largeImageUrl, $largeFileName);
+                $smallImageUrl = $detailContents->images->small;
+                $smallFileName = $movieInfo->d_id . '_small.jpg';
+                $this->getMovieImage($smallImageUrl, $smallFileName);
                 $this->nums = $this->nums - 1;
             } else {
                 sleep(61);

@@ -49,7 +49,7 @@
 {foreach from=$movieList item=movieInfo}
 <dl class="movie_dl">
   <dt>
-    <a href="#"><img src="{$base_url}images/{$movieInfo->d_id}image.jpg" /><i></i>
+    <a href="#"><img src="{$base_url}images/{$movieInfo->d_id}_large.jpg" /><i></i>
       <div>
         <p>{$movieInfo->title}</p>
         <p>已有<span class="orange">1235</span>人比价</p>
@@ -62,12 +62,12 @@
   </dt>
   <dd>
     <h3 class="left"><span><a href="#" class="tt">{$movieInfo->title}</a></span>({$movieInfo->tags[1]})</h3>
-    <span class="right score">8.5</span>
+    <span class="right score">{$movieInfo->rating}</span>
   </dd>
   <dd>
     <div class="left">
       <span class="price">33</span>元起</div>
-      <a href="#" class="right xq">点击详情</a>
+      <a href="{$base_url}movie/{$movieInfo->d_id}/108288" class="right xq">点击详情</a>
     </dd>
 </dl>
 {/foreach}
@@ -144,7 +144,7 @@
 <li class="on">
   <b class="left">{$rank+1}</b>
   <p class="left">
-    <img src="{$base_url}images/04.jpg" />
+    <img src="{$base_url}images/{$topInfo->d_id}_small.jpg" />
   </p>
   <div class="left movie_hot_tt plt10">
     <a href="#">{$topInfo->title}</a>

@@ -4,6 +4,36 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>影票夹</title>
 <link href="{$base_url}css/base.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript">
+function AutoResizeImage(maxWidth, maxHeight, objImg) {
+    var img = new Image();
+    img.src = objImg.src;
+    var hRatio;
+    var wRatio;
+    var Ratio = 1;
+    var w = img.width;
+    var h = img.height;
+    wRatio = maxWidth / w;
+    hRatio = maxHeight / h;
+    if (maxWidth == 0 && maxHeight == 0) {
+        Ratio = 1;
+    } else if (maxWidth == 0) { //
+        if (hRatio < 1)
+            Ratio = hRatio;
+    } else if (maxHeight == 0) {
+        if (wRatio < 1)
+            Ratio = wRatio;
+    } else if (wRatio < 1 || hRatio < 1) {
+        Ratio = (wRatio <= hRatio ? wRatio : hRatio);
+    }
+    if (Ratio < 1) {
+        w = w * Ratio;
+        h = h * Ratio;
+    }
+    objImg.height = h;
+    objImg.width = w;
+}
+</script>
 </head>
 
 <body>
@@ -49,7 +79,7 @@
 {foreach from=$movieList item=movieInfo}
 <dl class="movie_dl">
   <dt>
-    <a href="#"><img src="{$base_url}images/{$movieInfo->d_id}_large.jpg" /><i></i>
+    <a href="{$base_url}movie/{$movieInfo->d_id}/108288"><img src="{$base_url}images/{$movieInfo->d_id}_large.jpg" onload="AutoResizeImage(190,260,this)"/><i></i>
       <div>
         <p>{$movieInfo->title}</p>
         <p>已有<span class="orange">1235</span>人比价</p>
@@ -61,7 +91,7 @@
     </a>
   </dt>
   <dd>
-    <h3 class="left"><span><a href="#" class="tt">{$movieInfo->title}</a></span>({$movieInfo->tags[1]})</h3>
+    <h3 class="left"><span><a href="#" class="tt">{$movieInfo->title}</a></span>({$movieInfo->movie_type})</h3>
     <span class="right score">{$movieInfo->rating}</span>
   </dd>
   <dd>
@@ -144,10 +174,10 @@
 <li class="on">
   <b class="left">{$rank+1}</b>
   <p class="left">
-    <img src="{$base_url}images/{$topInfo->d_id}_small.jpg" />
+    <img src="{$base_url}images/{$topInfo->d_id}_small.jpg" onload="AutoResizeImage(60,98,this)"/>
   </p>
   <div class="left movie_hot_tt plt10">
-    <a href="#">{$topInfo->title}</a>
+    <a href="{$base_url}movie/{$topInfo->d_id}/108288">{$topInfo->title}</a>
     <em>{$topInfo->rating}</em>
     <p>导演：{$topInfo->director}<br />主演：{$topInfo->cast}</p>
   </div>

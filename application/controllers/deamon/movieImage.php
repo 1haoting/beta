@@ -8,7 +8,7 @@ set_time_limit(0);
  * @author Leo (haojianping) $
  *
  */
-class MovieDetail extends CI_Controller {
+class MovieImage extends CI_Controller {
 
     const MOVIE_DETAIL_URL = 'https://api.douban.com/v2/movie/subject/';
 

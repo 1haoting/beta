@@ -26,9 +26,10 @@ class MovieList extends CI_Controller {
 		$this->now_playing_movie->city_id = $this->nowCityId;
 		$this->movieList = $this->now_playing_movie->getMovieDetailByCityId();
 		foreach ($this->movieList as &$movieDetail) {
-			$movieDetail->summary = $this->tools->_filterString($movieDetail->summary, 900);	
-			$movieDetail->cast = $this->tools->_filterString($movieDetail->cast, 100);
-			$movieDetail->tags = explode(",", $movieDetail->tags);
+			$movieDetail->summary = $this->tools->filterString($movieDetail->summary, 900);	
+			$movieDetail->cast = $this->tools->filterString($movieDetail->cast, 100);
+            $movieDetail->movie_type = $this->tools->filterMovieType($movieDetail->movie_type, ',');
+            $movieDetail->title = $this->tools->filterMovieName($movieDetail);
 		}
 	}
 
@@ -36,8 +37,9 @@ class MovieList extends CI_Controller {
 	{
 		$this->topMovie = $this->now_playing_movie->getTopMovieByCityId();
 		foreach ($this->topMovie as &$movieDetail) {
-			$movieDetail->cast = $this->tools->_filterCast($movieDetail->cast, 2);
-			$movieDetail->director = $this->tools->_filterCast($movieDetail->director);
+			$movieDetail->cast = $this->tools->filterCast($movieDetail->cast, 2);
+			$movieDetail->director = $this->tools->filterCast($movieDetail->director);
+            $movieDetail->title = $this->tools->filterMovieName($movieDetail);
 		}
 	}
 

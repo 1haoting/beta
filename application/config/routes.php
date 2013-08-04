@@ -42,7 +42,8 @@ $route['default_controller'] = 'welcome';
 $route['404_override'] = '';
 $route['deamon/city'] = 'deamon/city';
 $route['deamon/movie'] = 'deamon/movie';
-$route['deamon/mdetail'] = 'deamon/movieDetail';
+$route['deamon/image'] = 'deamon/movieImage';
+$route['deamon/later'] = 'deamon/laterMovie';
 $route['movie/(:any)'] = 'MovieDetail/dispose/$1/$2';
 $route['nowplay/(:any)'] = 'MovieList/dispose/$1';
 

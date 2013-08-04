@@ -8,8 +8,13 @@ class Tools {
 
 	/**
 	 * filter gt string set ...
+     *
+     * @param string $data
+     * @param int    $num
+     *
+     * return string
 	 */
-    public function _filterString($data, $num)
+    public function filterString($data, $num)
 	{
 		if (strlen($data) > $num) {
 			$data = substr($data, 0, $num) . "...";
@@ -19,8 +24,13 @@ class Tools {
 
 	/**
 	 * filter cast chinese name
+     *
+     * @param string $data
+     * @param int    $num
+     * 
+     * return string
 	 */
-    public function _filterCast($data, $num = null)
+    public function filterCast($data, $num = null)
 	{
 		$castArr = explode(",", $data);
 		foreach ($castArr as $key => $name) {
@@ -34,6 +44,55 @@ class Tools {
 		$castArr = implode(",", $castArr);
 		return $castArr;
 	}
+
+    /**
+     * filter movie type
+     *
+     * @param string $data 
+     * @param string $needStr
+     *
+     * return string
+     */
+    public function filterMovieType($data, $needStr, $returnNum = 1)
+    {
+        if (strstr($data, $needStr)) {
+            $typeArr = explode($needStr, $data);
+            return $typeArr[$returnNum];
+        }
+        return $data;
+    }
+
+    /**
+     * filter movie name
+     *
+     * @param array $data
+     *
+     * return string
+     */
+    public function filterMovieName($data)
+    {
+        if ($this->checkStrChinese($data->alt_title)) {
+            return $this->filterMovieType($data->alt_title, '/', 0);
+        } else {
+            return $this->filterMovieType($data->title, '/', 0);
+        }
+    }
+
+    /**
+     * check is chinese
+     *
+     * @param string $str
+     *
+     * return bool
+     */
+    public function checkStrChinese($str)
+    {
+        if (preg_match("/[\x7f-\xff]/", $str)) { 
+            return true;
+        } else { 
+            return false;
+        } 
+    }
 
     public function getClientIP()
     {

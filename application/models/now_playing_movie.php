@@ -116,7 +116,7 @@ class Now_playing_movie extends CI_Model
         $where_data = array(
             'city_id' => $this->city_id,
         );
-        $this->db->select('d_id, rating, title, director, cast');
+        $this->db->select('d_id, rating, title, alt_title, director, cast');
         $this->db->order_by("rating", "desc");
         $query = $this->db->get_where(self::__TABLE, $where_data, 10);
         $result = $query->result();

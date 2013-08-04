@@ -28,6 +28,7 @@ class MovieDetail extends CI_Controller {
 		$this->movieInfo = $this->now_playing_movie->getMovieDetailByMovieId();
 		$this->movieInfo[0]->summary = $this->_filterString($this->movieInfo[0]->summary, 900);	
 		$this->movieInfo[0]->cast = $this->_filterString($this->movieInfo[0]->cast, 100);
+        $this->movieInfo[0]->title = $this->tools->filterMovieName($this->movieInfo[0]);
 	}
 
 	public function showView()

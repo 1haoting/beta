@@ -45,7 +45,9 @@ $route['deamon/movie'] = 'deamon/movie';
 $route['deamon/image'] = 'deamon/movieImage';
 $route['deamon/later'] = 'deamon/laterMovie';
 $route['movie/(:any)'] = 'MovieDetail/dispose/$1/$2';
-$route['nowplay/(:any)'] = 'MovieList/dispose/$1';
+$route['nowplay'] = 'MovieIndex/dispose';
+$route['list'] = 'MovieList/dispose';
+//$route['nowplay/(:any)'] = 'MovieList/dispose/$1';
 
 
 /* End of file routes.php */

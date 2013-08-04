@@ -1,5 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class MovieList extends CI_Controller {
+class MovieIndex extends CI_Controller {
 
     private $movieInfo;
     private $movieId;
@@ -13,9 +13,11 @@ class MovieList extends CI_Controller {
 		$this->load->library('tools');
 	}
 
+	//public function dispose($cityId)
 	public function dispose()
 	{
 		$this->getMovieList();
+		$this->getTOPMovieList();
         $this->showView();
 	}
 
@@ -32,10 +34,21 @@ class MovieList extends CI_Controller {
 		}
 	}
 
+	public function getTOPMovieList()
+	{
+		$this->topMovie = $this->now_playing_movie->getTopMovieByCityId();
+		foreach ($this->topMovie as &$movieDetail) {
+			$movieDetail->cast = $this->tools->filterCast($movieDetail->cast, 2);
+			$movieDetail->director = $this->tools->filterCast($movieDetail->director);
+            $movieDetail->title = $this->tools->filterMovieName($movieDetail);
+		}
+	}
+
 	public function showView()
 	{
 		$this->smarty->assign('base_url', base_url());
 		$this->smarty->assign('movieList', $this->movieList);
-        $this->smarty->view('movie_list.html');
+		$this->smarty->assign('topMovie', $this->topMovie);
+        $this->smarty->view('movie_index.html');
 	}
 }

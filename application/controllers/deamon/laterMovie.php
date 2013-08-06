@@ -21,11 +21,11 @@ class LaterMovie extends CI_Controller {
     public function index()
     {
         $this->nums = 10;
-        $this->_pregStr();
-        $this->_getAllCity();
+        $this->__pregStr();
+        $this->__getAllCity();
     }
 
-    private function _capture()
+    private function __capture()
     {
         if(!empty($this->all_city))
         {
@@ -51,9 +51,9 @@ class LaterMovie extends CI_Controller {
      *
      * @return obj $this->preg_str
      */
-    private function _pregStr()
+    private function __pregStr()
     {
-        $this->preg_str = '/<div id=\"upcoming\">(.*?)<\/div>[^<].*?<div id=\"ticket-guide\"/is';        
+        $this->preg_str = '/<div id=\"upcoming\">(.*?)<\/div>[^<].*?<div id=\"ticket-guide\"/is';
         $this->preg_hrefstr = '/<a.*?href="http:\/\/movie.douban.com\/subject\/(.+?)\/.*?"><img [^>].+?\/><\/a>/is';
     }
 
@@ -62,7 +62,7 @@ class LaterMovie extends CI_Controller {
      *
      * @beijing shanghai
      */
-    private function _getAllCity()
+    private function __getAllCity()
     {
         $this->all_city = array();
         $this->load->model('City_List');
@@ -73,7 +73,7 @@ class LaterMovie extends CI_Controller {
             foreach($this->city_data as $data_info)
             {
                 $this->all_city = array($data_info->d_c_id => $data_info->zh_name);
-                $this->_capture();
+                $this->__capture();
             }
         }
     }
@@ -86,6 +86,7 @@ class LaterMovie extends CI_Controller {
     private function __getContents($url, $cn_name)
     {
         $this->get_contents = file_get_contents($url . $cn_name);
+        var_dump($this->get_contents);die;
     }
 
     private function __pregMatchAll()
@@ -104,7 +105,7 @@ class LaterMovie extends CI_Controller {
 
     private function __disposePregData()
     {
-        $this->load->model('Now_playing_movie','now_playing_movie',TRUE);
+        $this->load->model('Later_movie','later_movie',TRUE);
 
         array_shift($this->preg_data[1]);
         foreach($this->preg_data[1] as $movie_id)
@@ -116,18 +117,18 @@ class LaterMovie extends CI_Controller {
                     $this->movie_id = $movie_id;
                     $this->__getDetailContents();
                     $this->__disposeDetailData();
-                    $this->now_playing_movie->d_id = $movie_id;
-                    $this->now_playing_movie->city_id = $this->city_id;
-                    $this->now_playing_movie->insertMovieData();
+                    $this->later_movie->d_id = $movie_id;
+                    $this->later_movie->city_id = $this->city_id;
+                    $this->later_movie->insertMovieData();
                 /*
-                    if(!$this->now_playing_movie->isExistMovie())
+                    if(!$this->later_movie->isExistMovie())
                     {
                         //update create time
-                        $this->now_playing_movie->updateCreateTime();die;
+                        $this->later_movie->updateCreateTime();die;
                     }
                     else
                     {
-                        $this->now_playing_movie->insertMovieData();
+                        $this->later_movie->insertMovieData();
                     }
                  */
                     $this->nums = $this->nums - 1;
@@ -156,9 +157,9 @@ class LaterMovie extends CI_Controller {
      **/
     private function __disposeDetailData()
     {
-        var_dump($this->get_detail_contents);die;
         $this->get_detail_contents = substr($this->get_detail_contents, 0, -1);
         $this->get_detail_contents = json_decode($this->get_detail_contents);
+        var_dump($this->get_detail_contents);die;
         foreach($this->get_detail_contents as $key_name => $value)
         {
             if(in_array($key_name, $this->allow_field))
@@ -167,7 +168,7 @@ class LaterMovie extends CI_Controller {
                 $tags_arr    = array();
                 if($key_name == 'rating')
                 {
-                    $this->now_playing_movie->$key_name = $value->average;
+                    $this->later_movie->$key_name = $value->average;
                     continue;
                 }
                 if($key_name == 'author')
@@ -176,7 +177,7 @@ class LaterMovie extends CI_Controller {
                     {
                         array_push($author_arr, $authors->name);
                     }
-                    $this->now_playing_movie->$key_name = implode(",", $author_arr); 
+                    $this->later_movie->$key_name = implode(",", $author_arr); 
                     continue;
                 }
                 if($key_name == 'tags')
@@ -185,7 +186,7 @@ class LaterMovie extends CI_Controller {
                     {
                         array_push($tags_arr, $tags->name);
                     }
-                    $this->now_playing_movie->$key_name = implode(",", $tags_arr); 
+                    $this->later_movie->$key_name = implode(",", $tags_arr); 
                     continue;
                 }
                 if($key_name == 'attrs')
@@ -199,12 +200,12 @@ class LaterMovie extends CI_Controller {
                             {
                                 array_push($attr_arr, $field_detail);
                             }
-                            $this->now_playing_movie->$attr_key = implode(",", $attr_arr); 
+                            $this->later_movie->$attr_key = implode(",", $attr_arr); 
                         }
                     }
                     continue;
                 }
-                $this->now_playing_movie->$key_name = $value;
+                $this->later_movie->$key_name = $value;
             }
 
         }

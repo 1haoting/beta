@@ -46,7 +46,28 @@ function AutoResizeImage(maxWidth, maxHeight, objImg) {
 </div>
 <div class="logo_div w980 clearfix">
 <h1 class="logo left"><a href="#"><img src="{$base_url}images/logo.jpg" /></a></h1>
-<div class="city_div left"><span>城市</span><b></b><div class="city_tc" style="display:none;"><div class="city_tc_top"></div><div class="city_tab_div"><div class="left hot_city">热门</div><ul class="left hot_city_ul" id="tab"><li>A-G</li><li>H-L</li><li>M-T</li><li>W-Z</li></ul></div><div class="city_tab_nr" id="tab_div"><div><ul><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">乌鲁木齐</a></li></ul></div><div><ul><li><a href="#">天津</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">乌鲁木齐</a></li></ul></div><div><ul><li><a href="#">上海</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">乌鲁木齐</a></li></ul></div><div><ul><li><a href="#">南京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">北京</a></li><li><a href="#">乌鲁木齐</a></li></ul></div></div></div></div><div class="search right"><input name="" type="text" class="txt" value="请输入电影名称"  onfocus="" onblur="" /><input name="" type="button" class="btn" /></div>
+<div class="city_div left">
+    <span>城市</span>
+    <b></b>
+    <div class="city_tc" style="display:none;">
+        <div class="city_tc_top"></div>
+        <div class="city_tab_div">
+            <div class="left hot_city">热门</div>
+            <ul class="left hot_city_ul" id="tab">
+            </ul>
+        </div>
+        <div class="city_tab_nr" id="tab_div">
+            <div>
+                <ul>
+                    {foreach from=$cityList item=cityInfo}
+                    <li><a href="{$base_url}nowplay/{$cityInfo->d_c_id}">{$cityInfo->name}</a></li>
+                    {/foreach}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="search right"><input name="" type="text" class="txt" value="请输入电影名称"  onfocus="" onblur="" /><input name="" type="button" class="btn" /></div>
 </div>
 <!--menu-->
 <div class="menu clearfix">

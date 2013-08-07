@@ -16,6 +16,7 @@ class later_movie extends CI_Model
     var  $alt_title = ''; 
     var  $rating = ''; 
     var  $title = ''; 
+    var  $image_url = '';
     var  $summary = ''; 
     var  $pubdate = ''; 
     var  $language = ''; 
@@ -128,7 +129,7 @@ class later_movie extends CI_Model
      */
     public function getOnlyMovieDid()
     {
-        $sql = "SELECT distinct d_id FROM " . self::__TABLE;
+        $sql = "SELECT distinct d_id, image_url FROM " . self::__TABLE;
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;

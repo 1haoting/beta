@@ -40,41 +40,20 @@
 {/foreach}
 </div>
 <div>
-<div class="tab_xz clearfix"><ul><li><a href="#">03月（1部）</a></li><li>|</li><li><a href="#">03月（1部）</a></li><li>|</li><li><a href="#">03月（1部）</a></li><li>|</li><li><a href="#">03月（1部）</a></li></ul></div>
-
 <div class="sy clearfix">
-    <h1 class="month">3月</h1>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-    </div>
-    <div class="sy clearfix">
-    <h1 class="month">4月</h1>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-    </div>
-    <div class="sy clearfix">
-    <h1 class="month">5月</h1>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-    </div>
-    
-    <div class="sy clearfix">
-    <h1 class="month">6月</h1>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl mrt13"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-   <dl class="movie_dl"><dt><a href="#"><img src="images/02.jpg" /></a></dt><dd><a href="#" class="tt">钢铁侠3</a></dd><dd>上映时间2012年12月11日</dd></dl>
-    </div>
+   <h1 class="month">8月</h1>
+   {foreach from=$laterMovieList item=movieInfo}
+    <dl class="movie_dl mrt13">
+      <dt>
+        <a href="#"><img src="{$base_url}images/{$movieInfo->d_id}_later_large.jpg" onload="AutoResizeImage(190,260,this)"/></a>
+      </dt>
+      <dd>
+        <a href="#" class="tt">{$movieInfo->title}</a>
+      </dd>
+      <dd>上映时间:{$movieInfo->pubdate}</dd>
+    </dl>
+    {/foreach}
+</div>
 
 </div>
 </div>

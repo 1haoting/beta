@@ -15,7 +15,7 @@ class LaterMovie extends CI_Controller {
 
     public $movie_arr   = array();
 
-    public $allow_field = array('author','alt_title','rating','title','summary', 'attrs', 'tags');
+    public $allow_field = array('author','alt_title','image','rating','title','summary', 'attrs', 'tags');
     public $allow_attrs_field = array('website','country','writer','director','cast','pubdate','language','movie_duration','year','movie_type');
 
     public function index()
@@ -86,7 +86,6 @@ class LaterMovie extends CI_Controller {
     private function __getContents($url, $cn_name)
     {
         $this->get_contents = file_get_contents($url . $cn_name);
-        var_dump($this->get_contents);die;
     }
 
     private function __pregMatchAll()
@@ -119,6 +118,7 @@ class LaterMovie extends CI_Controller {
                     $this->__disposeDetailData();
                     $this->later_movie->d_id = $movie_id;
                     $this->later_movie->city_id = $this->city_id;
+                    var_dump($this->later_movie);die;
                     $this->later_movie->insertMovieData();
                 /*
                     if(!$this->later_movie->isExistMovie())
@@ -159,7 +159,6 @@ class LaterMovie extends CI_Controller {
     {
         $this->get_detail_contents = substr($this->get_detail_contents, 0, -1);
         $this->get_detail_contents = json_decode($this->get_detail_contents);
-        var_dump($this->get_detail_contents);die;
         foreach($this->get_detail_contents as $key_name => $value)
         {
             if(in_array($key_name, $this->allow_field))
@@ -169,6 +168,11 @@ class LaterMovie extends CI_Controller {
                 if($key_name == 'rating')
                 {
                     $this->later_movie->$key_name = $value->average;
+                    continue;
+                }
+                if($key_name == 'image')
+                {
+                    $this->later_movie->image_url = $value;
                     continue;
                 }
                 if($key_name == 'author')

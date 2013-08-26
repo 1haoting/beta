@@ -10,7 +10,15 @@ class Cinema_model extends CI_Model
     /**
      * 基本字段
      */
-    var  $city_id, $area_id, $d_m_number, $d_m_id, $c_name, $c_address, $c_http, $c_phone, $c_time;
+    public $city_id;
+    public $area_id;
+    public $d_m_number;
+    public $d_m_id;
+    public $c_name;
+    public $c_address;
+    public $c_http;
+    public $c_phone;
+    public $c_time;
      
     //database  first_cinema 
     const __DATABASE= 'first_cinema';
@@ -40,6 +48,34 @@ class Cinema_model extends CI_Model
                     . " area LEFT JOIN " . self::__TABLE . " city"
                     . " ON area.parent_id=city.id"
                     . " WHERE area.parent_id!=0 ORDER BY city.id";
+        $ret = $this->db->query($query);
+        return $ret->result();
+    }
+
+    /**
+     *
+     * get city info
+     *
+     */
+    public function getCityInfoByCityAreaId() {
+        $sql = 'SELECT * FROM ' . self::__TBCINEMA;
+        $where = ' WHERE city_id = ' . $this->city_id;
+        if (isset($this->area_id)) {
+            $where .= ' AND area_id = ' . $this->area_id;
+        }
+        $query = $sql . $where;
+        $ret = $this->db->query($query);
+        return $ret->result();
+    }
+
+
+    /**
+     *
+     * get cinema list
+     *
+     */
+    public function getCinemaList() {
+        $query = 'SELECT d_m_number FROM ' . self::__TBCINEMA;
         $ret = $this->db->query($query);
         return $ret->result();
     }

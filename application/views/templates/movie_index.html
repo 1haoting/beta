@@ -37,7 +37,7 @@
 {foreach from=$laterMovie item=movieInfo}
 <dl class="movie_dl">
   <dt>
-    <a href="{$base_url}movie/{$movieInfo->d_id}/{$localIp}"><img src="{$base_url}images/{$movieInfo->d_id}_later_large.jpg" onload="AutoResizeImage(190,260,this)"/></a>
+    <a href=""><img src="{$base_url}images/{$movieInfo->d_id}_later_large.jpg" onload="AutoResizeImage(190,260,this)"/></a>
   </dt>
   <dd>
     <a href="#" class="tt">{$movieInfo->title}</a>
@@ -49,7 +49,7 @@
 </div>
 
 <div class="hot_cinema">
-<div class="cinema_tt"><h2><span>热门影院</span><a href="#">更多影院</a></h2></div>
+<div class="cinema_tt"><h2><span>热门影院</span><a href="{$base_url}cinema">更多影院</a></h2></div>
 <table width="100%" border="0" cellspacing="0" bgcolor="#ffffff" cellpadding="0" class="cinema_table">
   <tr>
     <td><span class="cinema_title"><a href="#">博纳国际影城（朝阳店）</a></span></td>

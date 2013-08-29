@@ -5,7 +5,7 @@
 <div class="w980 clearfix">
 <div class="location">您现在的位置：<a href="#">首页</a>&gt;<a href="#">影片</a></div>
 <div class="movie_tab_div left">
-    <ul id="tab"><li class="on" index="nowplaying_div">正在热映</li><li index="laterplay_div">即将上映</li></ul>
+    <ul id="tab"><li class="on">正在热映</li><li>即将上映</li></ul>
 </div>
 <div class="movie_list clearfix">
 <div class="movie_list_div" id="tab_div">
@@ -39,7 +39,7 @@
 </dl>
 {/foreach}
 </div>
-<div id='laterplay_div'>
+<div>
 <div class="sy clearfix">
    <h1 class="month">8月</h1>
    {foreach from=$laterMovieList item=movieInfo}
@@ -76,9 +76,9 @@ $(function(){
  $("#tab_div>div:not(:first)").hide();
  $("#nowplaying_div").show();
  $("#tab li").hover(function(){
-    var index = $(this).attr("index");
+    var index = $("#tab li").index(this);
     $(this).addClass("on").siblings().removeClass("on");
-    $("#" + index).show().siblings().hide();
+    $("#tab_div>div").eq(index).show().siblings().hide();
  });
 });
 </script>

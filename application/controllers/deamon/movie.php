@@ -156,7 +156,6 @@ class Movie extends CI_Controller {
      **/
     private function __disposeDetailData()
     {
-        $this->get_detail_contents = substr($this->get_detail_contents, 0, -1);
         $this->get_detail_contents = json_decode($this->get_detail_contents);
         foreach($this->get_detail_contents as $key_name => $value)
         {

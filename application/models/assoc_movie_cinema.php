@@ -13,11 +13,6 @@ class Assoc_movie_cinema extends CI_Model
     var  $id; 
     var  $movie_id; 
     var  $cinema_id; 
-    var  $type_id; 
-    var  $language_id; 
-    var  $price; 
-    var  $today; 
-    var  $tomorrow; 
      
     //database  first_cinema 
     const __DATABASE= 'first_cinema';
@@ -34,5 +29,23 @@ class Assoc_movie_cinema extends CI_Model
     public function insertAssocInfo()
     {
         $this->db->insert(self::__TABLE, $this);
+    }
+
+    /**
+     * check info is exist
+     */
+    public function isExistInfo()
+    {
+        $where_data = array(
+            'movie_id' => $this->movie_id,
+            'cinema_id' => $this->cinema_id,
+        );
+        $query = $this->db->get_where(self::__TABLE, $where_data, 1);
+        $result = $query->result();
+        if(count($result))
+        {
+            return true;
+        }
+        return false;
     }
 }

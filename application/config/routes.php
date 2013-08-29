@@ -45,10 +45,13 @@ $route['deamon/movie'] = 'deamon/movie';
 $route['deamon/image'] = 'deamon/movieImage';
 $route['deamon/later'] = 'deamon/laterMovie';
 $route['deamon/laterimage'] = 'deamon/laterMovieImage';
+$route['deamon/assoc'] = 'deamon/assocMovieCinema';
 $route['movie/(:any)'] = 'MovieDetail/dispose/$1/$2';
 $route['nowplay'] = 'MovieIndex/dispose';
 $route['list'] = 'MovieList/dispose';
 $route['nowplay/(:any)'] = 'MovieIndex/dispose/$1';
+$route['cinema'] = 'CinemaList/dispose';
+$route['cinema/(:any)'] = 'CinemaList/dispose/$1';
 
 
 /* End of file routes.php */

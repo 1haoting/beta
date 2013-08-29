@@ -126,12 +126,29 @@
 <div class="right_banner"><a href="#"><img src="{$base_url}images/03.jpg" /></a></div>
 <div class="remind">
 <h2>热片提醒</h2>
-<div class="mtp10 remind_div"><input name="" type="text" class="remind_txt" value="请输入手机号"  onfocus="" onblur="" /><input name="" type="button" class="remind_btn" value="订阅" /></div>
+<div class="mtp10 remind_div"><input name="" type="text" class="remind_txt" id="inputphone" value="请输入手机号"  onfocus="" onblur="" /><input name="" type="button" id="take" class="remind_btn" value="订阅" /></div>
 </div>
 </div>
 </div>
 {include file="inc_footer.html"}
 <script>
+//点击订阅按钮操作
+$("#take").click(function(){
+    var reg = /^1[3|4|5|8][0-9]\d{4,8}$/;
+    var phone = $("#inputphone").val();
+    phone = $.trim(phone);
+    if(!phone) {
+        alert("请输入手机号");
+        return false;
+    } else if(!reg.test(phone)) {
+        alert("请输入正确的手机号");
+        return false;
+    } else {
+        $.post("{$base_url}subscibe/insertsubscibe", {'phone':phone}, function(data){
+            alert(data);
+        });
+    }
+});
 //搜索获取失去焦点事件
 $(".search input.txt").focus(function(){
 	$(this).parent().addClass("search_on");

@@ -536,6 +536,37 @@ if ( ! function_exists('remove_invisible_characters'))
 	}
 }
 
+
+//-------------------------------------------------------------------------
+/**
+ * dump page and show message
+ * @access public
+ * @param  string
+ * @param  string
+ * @return void
+ */
+if ( ! function_exists('show_msg'))
+{
+	function show_msg($url, $msg)
+	{
+		$html  = '<div style="width:320px;height:180px;border:1px solid #000000" align="center">';
+		$html .= '<div style="width:318px;height:25px;margin:0;border:1px solid #000000;background-color:#db5048"></div>';
+		$html .= '<div style="width:98%;height:150px;">';
+		$html .= '<div style="margin-top:26px;height:16px;text-align:center">' . $msg . '</div>';
+		$html .= '<div style="margin-top:5px;height:16px;text-align:center">正在跳转页面...</div>';
+		$html .= '</div>';
+		$html .= '<script type="text/javascript">';
+		$html .= 'setTimeout("reloadpage()", 3000);';
+		$html .= 'function reloadpage() {';
+		$html .= 'var url = "' . $url . '";';
+		$html .= 'window.location.href = url;';
+		$html .= '}';
+		$html .= '</script>';
+		$html .= '</div>';
+		die( $html );
+	}
+}
+
 // ------------------------------------------------------------------------
 
 /**

@@ -14,6 +14,14 @@ class MovieImage extends CI_Controller {
 
     private $idarr;
 
+    /*
+     * 构造器
+     */
+    public function __construct() {
+        parent::__construct();
+        $this->load->model('now_playing_movie');
+    }
+
     public function index()
     {        
         $this->nums = 10;
@@ -23,10 +31,8 @@ class MovieImage extends CI_Controller {
 
     private function _getOnlyMovieDid()
     {
-        $this->load->model('Now_playing_movie','now_playing_movie',TRUE);
         $this->idArr = $this->now_playing_movie->getOnlyMovieDid();
     }
-
 
     /**
      * get nowplaying movie id  on city
@@ -59,10 +65,12 @@ class MovieImage extends CI_Controller {
      * @param string $imageUrl 
      * @param string $fileName
      */
-    public function getMovieImage($imageUrl, $fileName)
+    public function getMovieImage($imageUrl, $fileName, $flag = false)
     {
         $curl = curl_init($imageUrl);
-        $fileName = BASEPATH . '../images/' . $fileName;
+        $filepath = '../images/';
+        $flag && $filepath = '../images/cinema/';
+        $fileName = BASEPATH . $filepath . $fileName;
         curl_setopt($curl,CURLOPT_RETURNTRANSFER,1);
         $imageData = curl_exec($curl);
         curl_close($curl);

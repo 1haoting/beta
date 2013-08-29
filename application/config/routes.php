@@ -49,6 +49,7 @@ $route['movie/(:any)'] = 'MovieDetail/dispose/$1/$2';
 $route['nowplay'] = 'MovieIndex/dispose';
 $route['list'] = 'MovieList/dispose';
 $route['nowplay/(:any)'] = 'MovieIndex/dispose/$1';
+$route['login'] = 'login';
 
 
 /* End of file routes.php */

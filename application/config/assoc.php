@@ -9,13 +9,17 @@
 */
 
 //movie type
-$typeConfig[0] = '2D';
-$typeConfig[1] = '3D';
-$typeConfig[2] = 'IMAX';
-$typeConfig[3] = '巨幕';
-$typeConfig[4] = '数字';
+$config['typeConfig'] = array(
+        1 => '2D',
+        2 => '3D',
+        3 => 'IMAX',
+        4 => '巨幕',
+        5 => '数字'
+    );
 
 //movie language
-$language[0] = '原声';
-$language[1] = '普通话';
-$language[2] = '其他';
+$config['language'] = array(
+        1 => '原声',
+        2 => '普通话',
+        3 => '其他'
+    );

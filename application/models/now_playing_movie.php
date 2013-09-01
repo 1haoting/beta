@@ -174,8 +174,7 @@ class Now_playing_movie extends CI_Model
         $sql = "SELECT assoc.movie_id, assoc.cinema_id, tbsc.type_id, tbsc.language_id, 
                         tbsc.price, tbsc.s_time, tbsc.day, tbsc.week_day" . $field . " FROM " . self::__TBSCHEDULE . " tbsc 
                             LEFT JOIN " . self::__TBASSOC . " assoc ON tbsc.assoc_id = assoc.id " . $join . " 
-                                WHERE " . $typeWhere . " ORDER BY assoc.cinema_id DESC";
-
+                                WHERE " . $typeWhere . " ORDER BY assoc.cinema_id, tbsc.language_id,tbsc.type_id DESC";
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;

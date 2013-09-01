@@ -10,15 +10,7 @@ class Cinema_model extends CI_Model
     /**
      * 基本字段
      */
-    public $city_id;
-    public $area_id;
-    public $d_m_number;
-    public $d_m_id;
-    public $c_name;
-    public $c_address;
-    public $c_http;
-    public $c_phone;
-    public $c_time;
+    var  $city_id, $area_id, $d_m_number, $d_m_id, $c_name, $c_address, $c_http, $c_phone, $c_time;
      
     //database  first_cinema 
     const __DATABASE= 'first_cinema';
@@ -66,6 +58,7 @@ class Cinema_model extends CI_Model
         $ret = $this->db->query($query);
         return $ret->result();
     }
+
 
     /**
      * get cinema url list

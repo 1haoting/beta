@@ -108,7 +108,7 @@ class Now_playing_movie extends CI_Model
          //   'city_id' => $this->city_id,
         //);
         //$sql = "SELECT distinct('alt_title'),id,d_id,author,rating,title,summary,pubdate,language,country,writer,director,cast,movie_duration,year,movie_type,tags,city_id FROM " . self::__TABLE . " where city_id = " . $this->city_id;
-        $sql = "SELECT *, count(distinct alt_title) FROM " . self::__TABLE . " where city_id = " . $this->city_id . " group by alt_title order by create_time";
+        $sql = "SELECT *, count(distinct alt_title) FROM " . self::__TABLE . " where city_id = " . $this->city_id . " group by alt_title order by create_time   ";
         //$query = $this->db->get_where(self::__TABLE, $where_data);
         $query = $this->db->query($sql);
         $result = $query->result();
@@ -120,12 +120,14 @@ class Now_playing_movie extends CI_Model
      */
     public function getTopMovieByCityId()
     {
-        $where_data = array(
-            'city_id' => $this->city_id,
-        );
-        $this->db->select('d_id, rating, title, alt_title, director, cast');
-        $this->db->order_by("rating", "desc");
-        $query = $this->db->get_where(self::__TABLE, $where_data, 10);
+       // $where_data = array(
+       //     'city_id' => $this->city_id,
+       // );
+       // $this->db->select('d_id, rating, title, alt_title, director, cast');
+       // $this->db->order_by("rating", "desc");
+       // $query = $this->db->get_where(self::__TABLE, $where_data, 10);
+        $sql = "SELECT *, count(distinct alt_title) FROM " . self::__TABLE . " where city_id = " . $this->city_id . " group by alt_title order by create_time limit 0, 10";
+        $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
     }

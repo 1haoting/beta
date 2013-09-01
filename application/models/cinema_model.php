@@ -84,6 +84,7 @@ class Cinema_model extends CI_Model
         $query = "SELECT d_m_number, c_imgurl, c_index FROM " . self::__TBCINEMAIMG;
         $qy = $this->db->query($query);
         return $qy->result();
+    }
     /**
      *
      * get city info

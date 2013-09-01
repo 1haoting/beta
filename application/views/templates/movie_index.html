@@ -37,7 +37,7 @@
 {foreach from=$laterMovie item=movieInfo}
 <dl class="movie_dl">
   <dt>
-    <a href=""><img src="{$base_url}images/{$movieInfo->d_id}_later_large.jpg" onload="AutoResizeImage(190,260,this)"/></a>
+    <a href="{$base_url}movie/{$movieInfo->d_id}/{$localIp}"><img src="{$base_url}images/{$movieInfo->d_id}_later_large.jpg" onload="AutoResizeImage(190,260,this)"/></a>
   </dt>
   <dd>
     <a href="#" class="tt">{$movieInfo->title}</a>
@@ -126,39 +126,25 @@
 <div class="right_banner"><a href="#"><img src="{$base_url}images/03.jpg" /></a></div>
 <div class="remind">
 <h2>热片提醒</h2>
-<div class="mtp10 remind_div"><input name="" type="text" class="remind_txt" id="inputphone" value="请输入手机号"  onfocus="" onblur="" /><input name="" type="button" id="take" class="remind_btn" value="订阅" /></div>
+<div class="mtp10 remind_div">
+  <input name="" type="text" class="remind_txt" id="inputphone" value="请输入手机号"  accept=""  onfocus="" onblur="" />
+  <input name="" type="button" id="take" class="remind_btn" value="订阅" onclick="checksubmit()"/>
+</div>
 </div>
 </div>
 </div>
 {include file="inc_footer.html"}
-<script>
-//点击订阅按钮操作
-$("#take").click(function(){
-    var reg = /^1[3|4|5|8][0-9]\d{4,8}$/;
-    var phone = $("#inputphone").val();
-    phone = $.trim(phone);
-    if(!phone) {
-        alert("请输入手机号");
-        return false;
-    } else if(!reg.test(phone)) {
-        alert("请输入正确的手机号");
-        return false;
-    } else {
-        $.post("{$base_url}subscibe/insertsubscibe", {'phone':phone}, function(data){
-            alert(data);
-        });
-    }
-});
+<script type="text/javascript">
 //搜索获取失去焦点事件
 $(".search input.txt").focus(function(){
 	$(this).parent().addClass("search_on");
-	})
+	});
 $(".search input.txt").blur(function(){
 	$(this).parent().removeClass("search_on");
-	})
+	});
 $(".search").hover(function(){
 	$(this).addClass("search_on");
-	})
+	});
 //banner部分调用方法
 $('#change_div .a_bigImg').soChange({
 thumbObj:'#change_div .ul_change span',
@@ -176,6 +162,24 @@ $(".city_div").click(function(){
   $(".city_tc").show();  
   });
 //select模拟
+//点击订阅按钮操作
+function checksubmit() {
+    var reg = '/^1[3|4|5|8][0-9]{9}$/';
+    var phone = $("#inputphone").val();
+    phone = $.trim(phone);
+    if(!phone) {
+        alert("请输入手机号");
+        return false;
+    } else if(!reg.test(phone)) {
+        alert("请输入正确的手机号");
+        return false;
+    } else {
+        $.post("{$base_url}subscibe/insertsubscibe", 'phone=' + phone, function(data){
+            alert(data);
+        });
+    }
+    return false;
+}
 </script>
 </body>
 </html>

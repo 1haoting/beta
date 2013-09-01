@@ -104,10 +104,13 @@ class Now_playing_movie extends CI_Model
      */
     public function getMovieDetailByCityId()
     {
-        $where_data = array(
-            'city_id' => $this->city_id,
-        );
-        $query = $this->db->get_where(self::__TABLE, $where_data);
+        //$where_data = array(
+         //   'city_id' => $this->city_id,
+        //);
+        //$sql = "SELECT distinct('alt_title'),id,d_id,author,rating,title,summary,pubdate,language,country,writer,director,cast,movie_duration,year,movie_type,tags,city_id FROM " . self::__TABLE . " where city_id = " . $this->city_id;
+        $sql = "SELECT *, count(distinct alt_title) FROM " . self::__TABLE . " where city_id = " . $this->city_id . " group by alt_title order by create_time";
+        //$query = $this->db->get_where(self::__TABLE, $where_data);
+        $query = $this->db->query($sql);
         $result = $query->result();
         return $result;
     }

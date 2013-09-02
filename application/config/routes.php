@@ -46,6 +46,7 @@ $route['deamon/image'] = 'deamon/movieImage';
 $route['deamon/later'] = 'deamon/laterMovie';
 $route['deamon/laterimage'] = 'deamon/laterMovieImage';
 $route['deamon/assoc'] = 'deamon/assocMovieCinema';
+$route['deamon/schedule'] = 'deamon/schedule';
 $route['movie/(:any)'] = 'MovieDetail/dispose/$1/$2';
 $route['nowplay'] = 'MovieIndex/dispose';
 $route['list'] = 'MovieList/dispose';

@@ -26,7 +26,7 @@
   </dt>
   <dd>
     <h3 class="left">
-      <span><a href="#">{$movieInfo->title}</a></span>({$movieInfo->movie_type})
+      <span><a href="#">{$movieInfo->title|truncate:9:"..":true}</a></span>({$movieInfo->movie_type})
     </h3>
     <span class="right score">{$movieInfo->rating}</span>
   </dd>

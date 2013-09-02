@@ -38,8 +38,9 @@ class MovieDetail extends CI_Controller {
 		$this->languageId = $languageId;
 		$this->typeId = $typeId;
 		$this->getMovieDetail();
-		$this->getAreaInfo();
-		$this->dealWithMovies();
+		$this->getTOPMovieList();
+		//$this->getAreaInfo();
+		//$this->dealWithMovies();
 
         $this->showView();
 	}
@@ -130,6 +131,21 @@ class MovieDetail extends CI_Controller {
         $this->movieInfo[0]->title = $this->tools->filterMovieName($this->movieInfo[0]);
 	}
 
+    /**
+     * get now top movie list
+     *
+     * @return void
+     */
+	public function getTOPMovieList()
+	{
+		$this->topMovie = $this->now_playing_movie->getTopMovieByCityId();
+		foreach ($this->topMovie as &$movieDetail) {
+			$movieDetail->cast = $this->tools->filterCast($movieDetail->cast, 2);
+			$movieDetail->director = $this->tools->filterCast($movieDetail->director);
+            $movieDetail->title = $this->tools->filterMovieName($movieDetail);
+		}
+	}
+
 	public function showView()
 	{
 		$this->config->load("assoc");
@@ -140,13 +156,14 @@ class MovieDetail extends CI_Controller {
 		$this->smarty->assign('dealInfo',$this->dealInfo);
         $this->smarty->assign('movieInfo',$this->movieInfo[0]);
         $this->smarty->assign('obj',$this);
+		$this->smarty->assign('topMovie', $this->topMovie);
         $this->smarty->view('movie_detail.html');
 	}
 
 	private function _filterString($data, $num)
 	{
 		if (strlen($data) > $num) {
-			$data = substr($data, 0, $num) . "...";
+			$data = mb_substr($data, 0, $num, 'utf-8') . "...";
 		}
 		return $data;
 	}

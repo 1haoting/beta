@@ -232,14 +232,42 @@
 <div class="video_list_right right">
     <div class="right_banner"><a href="#"><img src="{$base_url}images/03.jpg"></a></div>
     <div class="hot_video">
-        <div class="hot_video_tt"><span class="right"><a href="#">更多</a></span>其他热门影片</div>
+        <div class="hot_video_tt"><span class="right"><a href="{$base_url}list">更多</a></span>其他热门影片</div>
         <div class="hot_video_list clearfix">
-            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
+            {foreach from=$topMovie key=rank item=topInfo name=foo}
+            <dl class="right_video clearfix">
+                <dt>
+                    <img src="{$base_url}images/{$topInfo->d_id}_small.jpg" onload="AutoResizeImage(60,98,this)"/>
+                </dt>
+                <dd>{$topInfo->pubdate}</dd>
+                <dd><a href="{$base_url}movie/{$topInfo->d_id}/108288">{$topInfo->title}</a></dd>
+                <dd>
+                    {if $topInfo->rating >=0 && $topInfo->rating <2}
+                    <img src="{$base_url}images/star01.gif" />
+                    {elseif $topInfo->rating >2 && $topInfo->rating <4}
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    {elseif $topInfo->rating >4 && $topInfo->rating <6}
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    {elseif $topInfo->rating >6 && $topInfo->rating <8}
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star02.gif" />
+                    {elseif $topInfo->rating >8 && $topInfo->rating <10}
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star02.gif" />
+                    {/if}
+                </dd>
+                <dd>类型：{$topInfo->movie_type}</dd>
+                <dd>地区：{$topInfo->country}</dd>
+            </dl>
+            {/foreach}
         </div>
     </div>
 </div>

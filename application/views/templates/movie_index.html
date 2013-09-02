@@ -19,7 +19,7 @@
     </a>
   </dt>
   <dd>
-    <h3 class="left"><span><a href="{$base_url}movie/{$movieInfo->d_id}/108288" class="tt">{$movieInfo->title}</a></span>({$movieInfo->movie_type})</h3>
+    <h3 class="left"><span><a href="{$base_url}movie/{$movieInfo->d_id}/108288" class="tt">{$movieInfo->title|truncate:9:"...":true}</a></span>({$movieInfo->movie_type})</h3>
     <span class="right score">{$movieInfo->rating}</span>
   </dd>
   <dd>
@@ -37,7 +37,7 @@
 {foreach from=$laterMovie item=movieInfo}
 <dl class="movie_dl">
   <dt>
-    <a href="{$base_url}movie/{$movieInfo->d_id}/{$localIp}"><img src="{$base_url}images/{$movieInfo->d_id}_later_large.jpg" onload="AutoResizeImage(190,260,this)"/></a>
+    <img src="{$base_url}images/{$movieInfo->d_id}_later_large.jpg" onload="AutoResizeImage(190,260,this)"/>
   </dt>
   <dd>
     <a href="#" class="tt">{$movieInfo->title}</a>

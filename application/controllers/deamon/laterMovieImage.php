@@ -79,6 +79,4 @@ class LaterMovieImage extends CI_Controller {
         return $filterUrl[$arraySum-1];
     }
 
-
-
 }

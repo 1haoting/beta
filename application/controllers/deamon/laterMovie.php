@@ -118,7 +118,6 @@ class LaterMovie extends CI_Controller {
                     $this->__disposeDetailData();
                     $this->later_movie->d_id = $movie_id;
                     $this->later_movie->city_id = $this->city_id;
-                    var_dump($this->later_movie);die;
                     $this->later_movie->insertMovieData();
                 /*
                     if(!$this->later_movie->isExistMovie())

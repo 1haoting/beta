@@ -45,6 +45,35 @@ class Cinema extends CI_Controller {
         $this->__getCinemaDetailInfo();
     }
 
+    /*
+     * 获取影院首页图片
+     */
+    public function cinemaimage() {
+        $this->__getCinemaImgPreg();
+        $this->__getCinemaUrl();
+        $this->__getcinemaImg();
+    }
+
+    /*
+     * 获取影院首页图片
+     */
+    private function __getcinemaImg() {
+        $this->index = 0;
+        if($this->url_list) {
+            foreach ($this->url_list as $key => $value) {
+                if($this->index < 45) {
+                    $intro = file_get_contents($value->c_http);
+                    preg_match($this->cinema_imginfo_preg, $intro, $match);
+                    isset($match[1]) && preg_match($this->cinema_img_preg, $match[1], $img);
+                    isset($img[1]) && $this->cinema_model->_updCinemaData(array("c_imgurl"=>$img[1]), array("d_m_number"=>$value->d_m_number));
+                } else {
+                    sleep(60);
+                    $this->index = 0;
+                }
+            }
+        }
+    }
+
 
     /*
      * 获取影院页面信息
@@ -206,6 +235,15 @@ class Cinema extends CI_Controller {
     private function __getCinemaIntroPreg() {
         $this->cinema_introall_preg = "/<div class=\"nav-items\">(.+?)<\/div>/is";
         $this->cinema_intro_pref = "/优惠.+?<a href=\"(.+?)\" hidefocus=\"true\">.+?影院介绍.+?<\/a>/is";
+
+    }
+
+    /**
+     * __getCinemaimgpreg
+     */
+    private function __getCinemaImgPreg() {
+        $this->cinema_imginfo_preg = "/<div class=\"user-pic\">(.+?)<\/div>/is";
+        $this->cinema_img_preg = "/src=\"(.+?)\"/is";
 
     }
 

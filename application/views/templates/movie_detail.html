@@ -14,66 +14,234 @@
 </div>
 
 <div class="movie_left left">
-<h1>影片阵容</h1>
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td>导演：{$movieInfo->director}</td>
-  </tr>
-  <tr>
-  <td>
-  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-  <tr>
-    <td width="36">主演：</td>
-    <td>{$movieInfo->cast}</td>
-   </tr>
-   </table>
-  </td>
-  </tr>
-  <tr>
-    <td>制片国家/地区 {$movieInfo->country}</td>
-  </tr>
-  <tr>
-    <td>类型：{$movieInfo->movie_type}</td>
-  </tr>
-  <tr>
-    <td>上映时间: {$movieInfo->pubdate}</td>
-  </tr>
-  <tr>
-    <td>片长：{$movieInfo->movie_duration}</td>
-  </tr>
-</table>
+    <h1>影片阵容</h1>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>导演：{$movieInfo->director}</td>
+        </tr>
+        <tr>
+            <td>
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="36">主演：</td>
+                        <td>{$movieInfo->cast}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>制片国家/地区 {$movieInfo->country}</td>
+        </tr>
+        <tr>
+            <td>类型：{$movieInfo->movie_type}</td>
+        </tr>
+        <tr>
+            <td>上映时间: {$movieInfo->pubdate}</td>
+        </tr>
+        <tr>
+            <td>片长：{$movieInfo->movie_duration}</td>
+        </tr>
+    </table>
 
 </div>
 
 <div class="movie_right right">
-<h1>剧情介绍</h1>
-<p>{$movieInfo->summary}</p>
+    <h1>剧情介绍</h1>
+    <p>{$movieInfo->summary}</p>
 </div>
 
 </div>
 </div>
 
 <div class="video_list left">
-<h1 class="video_list_h1" style="border-bottom:2px solid #990000; padding-bottom:10px;">放映排期<span>（本放映排期时间仅作参考，具体播放时间以影院实际播放为准）</span></h1>
+    <h1 class="video_list_h1">放映排期<span>（本放映排期时间仅作参考，具体播放时间以影院实际播放为准）</span></h1>
+    <div class="mtp10 cinema_choose clearfix">
+        <div class="clearfix w100">
+            <p class="left">所属区域：</p>
+            <input type="hidden" id="area" value="{$obj->areaId}"/>
+            <ul class="xz_ul left clearfix area" style="width:600px;"><li><a href="javascript:void(0);"
+             {if $obj->areaId == 0}class="on"{/if} index="0">全部</a></li>
+                {foreach from=$areaInfo item=areaData}
+                <li>|</li><li><a href="javascript:void(0);" index="{$areaData->id}" {if $obj->areaId == $areaData->id}class="on"{/if}>{$areaData->name}</a></li>
+                {/foreach}
+            </ul>
+        </div>
+        <!--<div class="clearfix w100">
+            <p class="left">订购类型：</p>
+            <ul class="xz_ul left clearfix" style="width:600px;">
+                <li><a href="#" class="on">全部</a></li>
+                <li>|</li>
+                <li><a href="#">在线选座</a></li>
+                <li>|</li>  
+                <li><a href="#">兑换券</a></li>
+                <li>|</li>
+                <li><a href="#">团购</a></li>
+            </ul>
+        </div>-->
+        <div class="clearfix w100">
+            <p class="left">排期时间：</p>
+            <input type="hidden" id="pqtime" value="{$obj->dayId}"/>
+            <ul class="xz_ul left clearfix pqtime" style="width:600px;">
+                <li><a href="javascript:void(0);"  {if $obj->dayId == 1}class="on"{/if} index="1">今天</a></li>
+                <li>|</li>
+                <li><a href="javascript:void(0);" index="2" {if $obj->dayId == 2}class="on"{/if}>明天</a></li>
+            </ul>
+        </div>
+        <div class="clearfix w100">
+            <p class="left">语言类型：</p>
+            <input type="hidden" id="language" value="{$obj->languageId}"/>
+            <ul class="xz_ul left clearfix language" style="width:600px;">
+                <li><a href="javascript:void(0);" {if $obj->languageId == 0}class="on"{/if} index="0">全部</a></li>
+                {foreach from=$language key=ky item=lg}
+                <li>|</li><li><a href="javascript:void(0);" index="{$ky}" {if $obj->languageId == $ky}class="on"{/if}>{$lg}</a></li>
+                {/foreach}
+            </ul>
+        </div>
+        <div class="clearfix w100">
+            <p class="left">版本选择：</p>
+            <input type="hidden" id="type" value="{$obj->typeId}"/>
+            <ul class="xz_ul left clearfix type" style="width:600px;">
+                <li><a href="javascript:void(0);" {if $obj->typeId == 0}class="on"{/if} index="0">全部</a></li>
+                {foreach from=$type item=tp key=ky}
+                <li>|</li><li><a href="javascript:void(0);" index="{$ky}" {if $obj->typeId == $ky}class="on"{/if}>{$tp}</a></li>
+                {/foreach}
+            </ul>
+        </div>
+    </div>
+    <!--<p class="upcoming">暂无排期 ，上映时间为：2013年04月17日</p>-->
 
-<p class="upcoming">暂无排期 ，上映时间为：2013年04月17日</p>
-
-    
+<div class="city_tt">
+    {if $obj->areaId == 0}
+        全部
+    {else}
+        {foreach from=$areaInfo item=areaData}
+            {if $obj->areaId == $areaData->id}
+                {$areaData->name}
+            {/if}
+        {/foreach}
+    {/if}
 </div>
+{if $dealInfo}
+{foreach from=$dealInfo key=k item=val}
+<div class="clearfix video_list_div">
+
+    <div class="video_tp left"><img src="{$val['imgurl']}" width="98px" height="98px"/></div>
+    <div class="video_right right">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0" class="video_table">
+            <tr>
+                <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                            <td width="418"><h2><a href="{$val['chttp']}">{$val['name']}</a></h2>
+                                <p>{$val['address']}<br>电话：{$val['phone']}</p></td>
+                            <td width="100"><span class="f36"><strong>{$val['price']}</strong></span>元起</td>
+                            <td><!--<a class="gp bjgp" href="javascript:void(0)" id="a1">比价购票</a>--></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td><table width="100%" cellspacing="0" cellpadding="0" border="0" class="mtp10">
+                        <tr>
+                            <td width="38"><img width="26" height="26" src="{$base_url}images/pic01.gif"></td>
+                            <td width="38"><img width="26" height="26" src="{$base_url}images/pic02.gif"></td>
+                            <td><img width="26" height="26" src="{$base_url}images/pic03.gif"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+                {foreach from=$val['m_time'] item=v}
+                <tr>
+                <td>
+                    <div class="mtp10"><span class="language_video left"><b>{$v['type']}</b>{$v['language']}</span>
+                        <ul class="left video_time">
+                            {foreach from=$v['s_time'] key=n item=time}
+                            {if $n != 0}
+                            <li>|</li>
+                            {/if}
+                            <li>{$time}</li>
+                            {/foreach}
+                        </ul>
+                    </div>
+                </td>
+                </tr>
+                {/foreach}
+        </table>
+    </div>
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" class="video_bj_table left" id="list_a1">
+        <tr>
+            <th>购票网站</th>
+            <th>靠谱度</th>
+            <th>票种类</th>
+            <th>票价</th>
+            <th width="90">&nbsp;</th>
+        </tr>
+        <tr>
+            <td><strong>QQ网购</strong></td>
+            <td>5</td>
+            <td><span class="mrt10"><img src="images/pic01.gif"></span><span class="mrt10"><img src="images/pic02.gif"></span><span><img src="images/pic03.gif"></span></td>
+            <td><span class="f36"><strong>29</strong></span>元起</td>
+            <td><a href="#" class="gp1">购票</a></td>
+        </tr>
+        <tr>
+            <td><strong>QQ网购</strong></td>
+            <td>5</td>
+            <td><span class="mrt10"><img src="images/pic01.gif"></span><span class="mrt10"><img src="images/pic02.gif"></span><span><img src="images/pic03.gif"></span></td>
+            <td><span class="f36"><strong>29</strong></span>元起</td>
+            <td><a href="#" class="gp1">购票</a></td>
+        </tr>
+        <tr>
+            <td><strong>QQ网购</strong></td>
+            <td>5</td>
+            <td><span class="mrt10"><img src="images/pic01.gif"></span><span class="mrt10"><img src="images/pic02.gif"></span><span><img src="images/pic03.gif"></span></td>
+            <td><span class="f36"><strong>29</strong></span>元起</td>
+            <td><a href="#" class="gp1">购票</a></td>
+        </tr>
+        <tr>
+            <td><strong>QQ网购</strong></td>
+            <td>5</td>
+            <td><span class="mrt10"><img src="images/pic01.gif"></span><span class="mrt10"><img src="images/pic02.gif"></span><span><img src="images/pic03.gif"></span></td>
+            <td><span class="f36"><strong>29</strong></span>元起</td>
+            <td><a href="#" class="gp1">购票</a></td>
+        </tr>
+        <tr>
+            <td><strong>QQ网购</strong></td>
+            <td>5</td>
+            <td><span class="mrt10"><img src="images/pic01.gif"></span><span class="mrt10"><img src="images/pic02.gif"></span><span><img src="images/pic03.gif"></span></td>
+            <td><span class="f36"><strong>29</strong></span>元起</td>
+            <td><a href="#" class="gp1">购票</a></td>
+        </tr>
+        <tr style="display:none;" class="video_none">
+            <td><strong>QQ网购</strong></td>
+            <td>5</td>
+            <td><span class="mrt10"><img src="images/pic01.gif"></span><span class="mrt10"><img src="images/pic02.gif"></span><span><img src="images/pic03.gif"></span></td>
+            <td><span class="f36"><strong>29</strong></span>元起</td>
+            <td><a href="#" class="gp1">购票</a></td>
+        </tr>
+        <tr>
+            <td colspan="5" class="zhankai"><div class="zk_btn"><span>全部展开</span></div></td>
+        </tr>
+    </table>
+</div>
+{/foreach}
+{else}
+    <p class="upcoming">暂无排期 ，上映时间为：2013年04月17日</p>
+{/if}
+</div>
+
 
 <div class="video_list_right right">
-<div class="right_banner"><a href="#"><img src="{$base_url}images/03.jpg"></a></div>
-<div class="hot_video">
-<div class="hot_video_tt"><span class="right"><a href="#">更多</a></span>其他热门影片</div>
-<div class="hot_video_list clearfix">
-<dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-</div>
-</div>
+    <div class="right_banner"><a href="#"><img src="{$base_url}images/03.jpg"></a></div>
+    <div class="hot_video">
+        <div class="hot_video_tt"><span class="right"><a href="#">更多</a></span>其他热门影片</div>
+        <div class="hot_video_list clearfix">
+            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
+            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
+            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
+            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
+            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
+            <dl class="right_video clearfix"><dt><a href="#"><img src="{$base_url}images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star01.gif" /><img src="{$base_url}images/star02.gif" /><img src="{$base_url}images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
+        </div>
+    </div>
 </div>
 
 
@@ -81,48 +249,112 @@
 
 {include file="inc_footer.html"}
 <script>
-//搜索获取失去焦点事件
-$(".search input.txt").focus(function(){
-  $(this).parent().addClass("search_on");
-  })
-$(".search input.txt").blur(function(){
-  $(this).parent().removeClass("search_on");
-  })
-$(".search").hover(function(){
-  $(this).addClass("search_on");
-  })
-//tab切换
-$(function(){
- $("#tab_div>div:not(:first)").hide();
- $("#tab li").hover(function(){
-    var index = $("#tab li").index(this);
-    $(this).addClass("on").siblings().removeClass("on");
-    $("#tab_div>div").eq(index).show().siblings().hide();
- });
-});
-//比价
-$(".bjgp").click(function(){
-    var index = $(this).attr('id');
-  $("#list_"+index).toggle();
- });
-//比较展开
-$('.zk_btn').click(function(){
-if($(this).parent().parent().siblings(".video_none").is(":visible")){
-  $(this).parent().parent().siblings(".video_none").hide();
-  $(this).removeClass("zk_btn_on").children("span").text("全部展开")
-  }else{
-  $(this).parent().parent().siblings(".video_none").show();
-  $(this).addClass("zk_btn_on").children("span").text("全部收起")
+    //搜索获取失去焦点事件
+    $(".search input.txt").focus(function(){
+        $(this).parent().addClass("search_on");
+    })
+    $(".search input.txt").blur(function(){
+        $(this).parent().removeClass("search_on");
+    })
+    $(".search").hover(function(){
+        $(this).addClass("search_on");
+    })
+    //tab切换
+    $(function(){
+        $("#tab_div>div:not(:first)").hide();
+        $("#tab li").hover(function(){
+            var index = $("#tab li").index(this);
+            $(this).addClass("on").siblings().removeClass("on");
+            $("#tab_div>div").eq(index).show().siblings().hide();
+        });
+
+        $(".area li a").click(function(){
+            var that = this;
+            $(that).parents("ul").find("li a").each(function() {
+                $(this).removeClass("on");
+            });
+            $(that).addClass("on");
+            $("#area").val($(that).attr("index"));
+            $(".city_tt").html($(that).html());
+            joinLocalUrl();
+        });
+
+        $(".pqtime li a").click(function(){
+            var that = this;
+            $(that).parents("ul").find("li a").each(function() {
+                $(this).removeClass("on");
+            });
+            $(that).addClass("on");
+            $("#pqtime").val($(that).attr("index"));
+            joinLocalUrl();
+        });
+
+        $(".language li a").click(function(){
+            var that = this;
+            $(that).parents("ul").find("li a").each(function() {
+                $(this).removeClass("on");
+            });
+            $(that).addClass("on");
+            $("#language").val($(that).attr("index"));
+            joinLocalUrl();
+        });
+
+        $(".type li a").click(function(){
+            var that = this;
+            $(that).parents("ul").find("li a").each(function() {
+                $(this).removeClass("on");
+            });
+            $(that).addClass("on");
+            $("#type").val($(that).attr("index"));
+            joinLocalUrl();
+        });
+    });
+    //比价
+    $(".bjgp").click(function(){
+        var index = $(this).attr('id');
+        $("#list_"+index).toggle();
+    });
+    //比较展开
+    $('.zk_btn').click(function(){
+        if($(this).parent().parent().siblings(".video_none").is(":visible")){
+            $(this).parent().parent().siblings(".video_none").hide();
+            $(this).removeClass("zk_btn_on").children("span").text("全部展开")
+            }else{
+            $(this).parent().parent().siblings(".video_none").show();
+            $(this).addClass("zk_btn_on").children("span").text("全部收起")
+        }
+        return false;              
+    })
+
+    function joinLocalUrl() {
+        var path = [];
+        var url = window.location.href;
+        var urlArray = url.split("/");
+        var index = 0;
+        for(var i in urlArray) {
+            path.push(urlArray[i]);
+            if(urlArray[i] == 'movie') {
+                index = 1;
+            }
+            if(index > 2)  break;
+            else if(index > 0) index++;
+        }
+        path = path.join("/");
+        
+        var areaid = $(".area .on").attr("index");
+        var pqtime = $(".pqtime .on").attr("index");
+        var language = $(".language .on").attr("index");
+        var type = $(".type .on").attr("index");
+        path += "/" + areaid + "/" + pqtime + "/" + language + "/" + type;
+        window.location.href = path;
     }
-    return false;              
-})
 </script>
 <!--[if IE 6]>
 <script type="text/javascript" src="{$base_url}js/ie6png.js"></script>
 </script>
 <script type="text/javascript">
-  DD_belatedPNG.fix('a');
+    DD_belatedPNG.fix('a');
 </script>
- <![endif]-->
+<![endif]-->
 </body>
 </html>

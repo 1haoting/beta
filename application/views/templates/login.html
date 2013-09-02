@@ -15,8 +15,8 @@
 <div class="login_div clearfix">
 <div class="login_page_div left">
 <h1>登录影票夹</h1>
-<form method="post" action="{$base_url}login" id="loginform">
-	<div class="mtp20"><input type="text" value="邮箱用户名" class="sr_input user_email" style="margin:0;" name="user_email"></div>
+<form method="post" action="{$base_url}login/enter" id="loginform">
+	<div class="mtp20"><input type="text" value="邮箱用户名" class="sr_input user_email" style="margin:0;" name="user_email" id="user_email"></div>
 	<div class="mtp10">
 		<input type="text" value="密码" class="sr_input user_pass" style="margin:0;" name="" index="pwd">
 		<input type="hidden" name="pwd" value="" id="pwd"/>
@@ -35,11 +35,11 @@
 <div class="mtp10" style="display:none" id="all_error"><img src="{$base_url}images/notice.jpg" /><b><font color="red" id="error"></font></b></div>
 <div class="mtp20"><input type="text" value="邮箱用户名" class="sr_input user_email" style="margin:0;" name="regemail" id="regemail"></div>
 <div class="mtp10">
-	<input type="text" value="密码" class="sr_input user_pass" style="margin:0;" name="" index="regpwd>
+	<input type="text" value="密码" class="sr_input user_pass" style="margin:0;" name="" index="regpwd">
 	<input type="hidden" name="regpwd" value="" id="regpwd"/>
 </div>
 <div class="mtp10">
-	<input type="text" value="确认密码" class="sr_input user_unpass" style="margin:0;" name="" index="regunpwd>
+	<input type="text" value="确认密码" class="sr_input user_unpass" style="margin:0;" name="" index="regunpwd">
 	<input type="hidden" name="regunpwd" value="" id="regunpwd"/>
 </div>
 <div class="mtp10"><input type="text" value="验证码" class="sr_input1 authcode" name=""><span class="mlt5"><img id="captcha" src="{$base_url}login/getcaptcha" style="cursor:pointer"/></span></div>
@@ -58,6 +58,20 @@
 		//获取验证码
 		$("#captcha").click(function(){
 			$(this).attr("src", "{$base_url}login/getcaptcha?" + Math.random()*99);
+		});
+
+		//登录提交验证
+		$("#loginform").submit(function() {
+			var email = $("#user_email").val();
+			var pwd = $("#pwd").val();
+			if(email == '' || email == '邮箱用户名') {
+				alert("请输入邮箱用户名！");
+				return false;
+			} else if(pwd == '') {
+				alert("请输入邮箱用户名！");
+				return false;
+			}
+			return true;
 		});
 
 		//注册提交验证

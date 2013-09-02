@@ -10,7 +10,9 @@ class Login_model extends CI_Model
     /**
      * 基本字段
      */
-    var $email, $pwd, $c_time;
+    var $email;
+    var $pwd;
+    var $c_time;
      
     //database  user 
     const __DATABASE= 'first_cinema';
@@ -34,8 +36,11 @@ class Login_model extends CI_Model
      * check email
      *
      */
-    public function _checkEmail($email) {
-        $query = "SELECT COUNT(*) AS total FROM " . self::__TABLE . " WHERE email='" . $email . "'";
+    public function _checkEmail($email, $pwd = '') {
+        $field = " COUNT(*) AS total ";
+        $pwd && $field = " id ";
+        $query = "SELECT $field FROM " . self::__TABLE . " WHERE email='" . $email . "'";
+        $pwd && $query .= " AND pwd='" . $pwd . "'";
         $ret = $this->db->query($query);
         return $ret->result();
     }

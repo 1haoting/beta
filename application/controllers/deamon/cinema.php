@@ -65,7 +65,7 @@ class Cinema extends CI_Controller {
                     $intro = file_get_contents($value->c_http);
                     preg_match($this->cinema_imginfo_preg, $intro, $match);
                     isset($match[1]) && preg_match($this->cinema_img_preg, $match[1], $img);
-                    isset($img[1]) && $this->cinema_model->_updCinemaData(array("d_m_number", $value->d_m_number), array("c_imgurl"=>$img[1]));
+                    isset($img[1]) && $this->cinema_model->_updCinemaData(array("c_imgurl"=>$img[1]), array("d_m_number"=>$value->d_m_number));
                 } else {
                     sleep(60);
                     $this->index = 0;

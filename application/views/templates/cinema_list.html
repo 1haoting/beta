@@ -8,10 +8,14 @@
         <div class="mtp10 cinema_choose clearfix">
             <div class="clearfix cinema_choose_div">
                 <p class="left">所属区域：</p>
-                <ul class="xz_ul left clearfix"><li><a class="on" href="{$base_url}cinema">全部</a></li>
+                <ul class="xz_ul left clearfix"><li><a class="{if $areaId}{else}on{/if}" href="{$base_url}cinema{if $cityId}/{$cityId}{/if}">全部</a></li>
                     {foreach from=$areaData item=areaInfo}
                     <li>|</li>
-                    <li><a href="{$base_url}cinema/{$areaInfo->d_c_id}">{$areaInfo->name}</a></li>
+                    {if $cityId}
+                    <li><a class="{if $areaId == $areaInfo->d_c_id}on{else}{/if}" href="{$base_url}cinema/{$cityId}/{$areaInfo->d_c_id}">{$areaInfo->name}</a></li>
+                    {else}
+                    <li><a class="{if $areaId == $areaInfo->d_c_id}on{else}{/if}" href="{$base_url}cinema/{$areaInfo->d_c_id}">{$areaInfo->name}</a></li>
+                    {/if}
                     {/foreach}
                 </ul>
             </div>

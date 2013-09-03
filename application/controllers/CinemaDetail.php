@@ -1,8 +1,9 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-class MovieDetail extends CI_Controller {
+class CinemaDetail extends CI_Controller {
 
-    private $movieInfo;
-    public $movieId;
+    private $cinemaInfo;
+    private $cinemaImgUlr;
+    public $cinemaId;
     public $cityId;
     public $typeconfig;
     public $language;
@@ -24,20 +25,19 @@ class MovieDetail extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Now_playing_movie','now_playing_movie',TRUE);
+		$this->load->model('cinema_model');
 		$this->config->load("assoc");
 		$this->typeconfig = $this->config->item("typeConfig");
 		$this->language = $this->config->item("language");
 	}
 
-	public function dispose($movieId, $cityId, $areaId = 0,$dayId = 1, $languageId = 0, $typeId = 0)
+	public function dispose($cinemaId, $dayId = 1, $languageId = 0, $typeId = 0)
 	{
-		$this->movieId = $movieId;
-		$this->cityId = $cityId;
-		$this->areaId = $areaId;
+		$this->cinemaId = $cinemaId;
 		$this->dayId = $dayId;
 		$this->languageId = $languageId;
 		$this->typeId = $typeId;
-		$this->getMovieDetail();
+		$this->getCinemaDetail();
 		$this->getTOPMovieList();
 		$this->getAreaInfo();
 		$this->dealWithMovies();
@@ -116,16 +116,9 @@ class MovieDetail extends CI_Controller {
 		$this->areaInfo = $this->now_playing_movie->getAreaForCityId($this->cityId);
 	}
 
-	public function getMovieDetail()
+	public function getCinemaDetail()
 	{
-		$this->now_playing_movie->d_id = $this->movieId;
-		$this->now_playing_movie->city_id = $this->cityId;
-
-		$this->movieInfo = $this->now_playing_movie->getMovieDetailByMovieId();
-
-		$this->movieInfo[0]->summary = $this->_filterString($this->movieInfo[0]->summary, 900);	
-		$this->movieInfo[0]->cast = $this->_filterString($this->movieInfo[0]->cast, 100);
-        $this->movieInfo[0]->title = $this->tools->filterMovieName($this->movieInfo[0]);
+		$this->cinemaInfo = $this->cinema_model->getCinemaList($this->cinemaId);
 	}
 
     /**

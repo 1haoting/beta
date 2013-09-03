@@ -125,13 +125,13 @@
 {foreach from=$dealInfo key=k item=val}
 <div class="clearfix video_list_div">
 
-    <div class="video_tp left"><img src="{$val['imgurl']}" width="98px" height="98px"/></div>
+    <div class="video_tp left"><img src="{$val['imgurl']}" width="98" height="98" /></div>
     <div class="video_right right">
         <table width="100%" cellspacing="0" cellpadding="0" border="0" class="video_table">
             <tr>
                 <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
                         <tr>
-                            <td width="418"><h2><a href="{$val['chttp']}">{$val['name']}</a></h2>
+                            <td width="418"><h2><a href="#">{$val['name']}</a></h2>
                                 <p>{$val['address']}<br>电话：{$val['phone']}</p></td>
                             <td width="100"><span class="f36"><strong>{$val['price']}</strong></span>元起</td>
                             <td><!--<a class="gp bjgp" href="javascript:void(0)" id="a1">比价购票</a>--></td>

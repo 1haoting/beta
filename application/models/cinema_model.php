@@ -10,7 +10,15 @@ class Cinema_model extends CI_Model
     /**
      * 基本字段
      */
-    var  $city_id, $area_id, $d_m_number, $d_m_id, $c_name, $c_address, $c_http, $c_phone, $c_time;
+    var $city_id;
+    var $area_id;
+    var $d_m_number;
+    var $d_m_id;
+    var $c_name;
+    var $c_address;
+    var $c_http;
+    var $c_phone;
+    var $c_time;
      
     //database  first_cinema 
     const __DATABASE= 'first_cinema';
@@ -99,8 +107,8 @@ class Cinema_model extends CI_Model
      * get cinema list
      *
      */
-    public function getCinemaList() {
-        $query = 'SELECT d_m_number FROM ' . self::__TBCINEMA;
+    public function getCinemaList( $cinemaId = 0 ) {
+        $query = 'SELECT * FROM ' . self::__TBCINEMA . ($cinemaId ? ' WHERE d_m_number=' . $cinemaId : '');
         $ret = $this->db->query($query);
         return $ret->result();
     }

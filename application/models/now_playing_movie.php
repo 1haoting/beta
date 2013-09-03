@@ -161,7 +161,7 @@ class Now_playing_movie extends CI_Model
      */
     public function getMoviePq($obj, $type = false)
     {
-       /*$typeWhere = " tbsc.day=1 AND assoc.movie_id=" . $obj->movieId;
+       $typeWhere = " tbsc.day=1 AND assoc.movie_id=" . $obj->movieId;
         !$type && !$obj->areaId && $typeWhere .= " AND assoc.cinema_id in (
                 SELECT d_m_number FROM " . self::__TBCINEMA . " WHERE city_id=" . $obj->cityId . ")";
         !$type && $obj->areaId && $typeWhere .= " AND cinema.area_id=" . $obj->areaId;
@@ -176,8 +176,9 @@ class Now_playing_movie extends CI_Model
         $sql = "SELECT assoc.movie_id, assoc.cinema_id, tbsc.type_id, tbsc.language_id, 
                         tbsc.price, tbsc.s_time, tbsc.day, tbsc.week_day" . $field . " FROM " . self::__TBSCHEDULE . " tbsc 
                             LEFT JOIN " . self::__TBASSOC . " assoc ON tbsc.assoc_id = assoc.id " . $join . " 
-                                WHERE " . $typeWhere . " ORDER BY assoc.cinema_id, tbsc.language_id,tbsc.type_id DESC";*/
-        $typeWhere = " tbsc.day=1 AND assoc.movie_id=" . $obj->movieId;
+                                WHERE " . $typeWhere . " ORDER BY assoc.cinema_id, tbsc.language_id,tbsc.type_id DESC";
+
+        /*$typeWhere = " tbsc.day=1 AND assoc.movie_id=" . $obj->movieId;
         !$type && !$obj->areaId && $typeWhere .= " AND assoc.cinema_id in (
                 SELECT d_m_number FROM " . self::__TBCINEMA . " WHERE city_id=" . $obj->cityId . ")";
         !$type && $obj->areaId && $typeWhere .= " AND cinema.area_id=" . $obj->areaId;
@@ -192,7 +193,7 @@ class Now_playing_movie extends CI_Model
         $sql = "SELECT assoc.movie_id, assoc.cinema_id, tbsc.type_id, tbsc.language_id, 
                         tbsc.price, tbsc.s_time, tbsc.day, tbsc.week_day" . $field . " FROM " . self::__TBSCHEDULE . " tbsc 
                             LEFT JOIN " . self::__TBASSOC . " assoc ON tbsc.assoc_id = assoc.id " . $join . " 
-                                WHERE " . $typeWhere . " ORDER BY assoc.cinema_id, tbsc.language_id,tbsc.type_id DESC";
+                                WHERE " . $typeWhere . " ORDER BY assoc.cinema_id, tbsc.language_id,tbsc.type_id DESC";*/
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;

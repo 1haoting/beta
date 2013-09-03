@@ -81,4 +81,21 @@ class City_List extends CI_Model
         }
         return $data;
     }
+
+    /**
+     * get city and area info by zh name
+     */
+    public function selectInfoByDid()
+    {
+        $this->db->where('d_c_id', $this->d_c_id); 
+        $this->db->order_by('id', 'asc'); 
+        $query = $this->db->get(self::__TABLE);
+        $data = $query->result();
+
+        if(empty($data))
+        {
+            return false;
+        }
+        return $data;
+    }
 }

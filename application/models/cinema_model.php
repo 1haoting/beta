@@ -104,4 +104,18 @@ class Cinema_model extends CI_Model
         $ret = $this->db->query($query);
         return $ret->result();
     }
+
+    /**
+     *
+     * get top five cinema info
+     *
+     */
+    public function getTopCinemaList() {
+        $sql = 'SELECT * FROM ' . self::__TBCINEMA;
+        $where = ' WHERE city_id = ' . $this->city_id;
+        $where .= ' ORDER BY RAND() LIMIT 5';
+        $query = $sql . $where;
+        $ret = $this->db->query($query);
+        return $ret->result();
+    }
 }

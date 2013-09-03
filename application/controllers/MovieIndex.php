@@ -11,6 +11,7 @@ class MovieIndex extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->library('tools');
+        $this->load->model('cinema_model');
 	}
 
 	public function dispose($cityId = null)
@@ -20,6 +21,7 @@ class MovieIndex extends CI_Controller {
 		$this->getMovieList();
 		$this->getTOPMovieList();
         $this->getLaterMovieList();
+        $this->getTopCinemaList();
         $this->showView();
 	}
 
@@ -105,6 +107,17 @@ class MovieIndex extends CI_Controller {
         }
 	}
 
+    /**
+     * get top cinema list
+     * 
+     * @return void
+     */
+	public function getTopCinemaList()
+	{
+		$this->cinema_model->city_id = $this->nowCityId;
+		$this->cinema_list = $this->cinema_model->getTopCinemaList();
+	}
+
 	public function showView()
 	{
 		$this->smarty->assign('localIp', $this->nowCityId);
@@ -113,6 +126,7 @@ class MovieIndex extends CI_Controller {
 		$this->smarty->assign('topMovie', $this->topMovie);
 		$this->smarty->assign('laterMovie', $this->laterMovieList);
 		$this->smarty->assign('cityList', $this->city_data);
+		$this->smarty->assign('topCinema', $this->cinema_list);
         $this->smarty->view('movie_index.html');
 	}
 }

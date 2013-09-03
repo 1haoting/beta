@@ -24,10 +24,10 @@ class CinemaList extends CI_Controller {
      *
      * @return void
      */
-	public function dispose($areaId = null)
+	public function dispose($cityId = null ,$areaId = null)
 	{
-        $this->getCityId();
-		$this->getCinemaList($areaId);
+        $this->getCityId($cityId);
+		$this->getCinemaList($cityId, $areaId);
 		//$this->getLaterMovieList();
         $this->showView();
 	}
@@ -37,11 +37,16 @@ class CinemaList extends CI_Controller {
      *
      * @return void
      */
-    public function getCityId()
+    public function getCityId($cityId)
     {
-        $this->localCityName = $this->tools->getLocalCity();
-        $this->City_List->zh_name = $this->localCityName;
-        $this->city_data = $this->City_List->selectCityInfoByZhName();
+        if (isset($cityId)) {
+            $this->City_List->d_c_id = $cityId;
+            $this->city_data = $this->City_List->selectInfoByDid();
+        } else {
+            $this->localCityName = $this->tools->getLocalCity();
+            $this->City_List->zh_name = $this->localCityName;
+            $this->city_data = $this->City_List->selectCityInfoByZhName();
+        }
         $this->City_List->parent_id = $this->city_data[0]->id;
         $this->area_data = $this->City_List->selectAreaInfoByParentId();
     }
@@ -51,9 +56,16 @@ class CinemaList extends CI_Controller {
      *
      * @return void
      */
-	public function getCinemaList($areaId)
+	public function getCinemaList($cityId, $areaId)
 	{
-        $this->cinema_model->city_id = $this->city_data[0]->d_c_id;
+        if(isset($cityId))
+        {
+            $this->cinema_model->city_id = $cityId;
+            $this->smarty->assign('cityId', $cityId);
+        } else {
+            $this->cinema_model->city_id = $this->city_data[0]->d_c_id;
+            $this->smarty->assign('cityId', $this->city_data[0]->d_c_id);
+        }
         if (isset($areaId)) {
             $this->cinema_model->area_id = $areaId;
         }

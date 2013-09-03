@@ -39,9 +39,8 @@ class MovieDetail extends CI_Controller {
 		$this->typeId = $typeId;
 		$this->getMovieDetail();
 		$this->getTOPMovieList();
-		//$this->getAreaInfo();
-		//$this->dealWithMovies();
-
+		$this->getAreaInfo();
+		$this->dealWithMovies();
         $this->showView();
 	}
 
@@ -106,9 +105,9 @@ class MovieDetail extends CI_Controller {
 			$this->dealInfo[$this->index]['address'] = $value->c_address;
 			$this->dealInfo[$this->index]['phone'] = $value->c_phone;
 			$this->dealInfo[$this->index]['chttp'] = $value->c_http;
-			$this->dealInfo[$this->index]['imgurl'] = $value->c_imgurl;
-		} else {
-
+			//$this->dealInfo[$this->index]['imgurl'] = $value->c_imgurl;
+			$this->dealInfo[$this->index]['imgurl'] = "";
+	
 		}
 	}
 

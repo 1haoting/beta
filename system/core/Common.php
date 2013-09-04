@@ -557,6 +557,25 @@ if ( ! function_exists('show_msg'))
 	}
 }
 
+//-------------------------------------------------------------------------
+/**
+ * dump page and show message
+ * @access public
+ * @param  string
+ * @param  string
+ * @return void
+ */
+if ( ! function_exists('getCityInfos'))
+{
+	function getCityInfos ()
+	{
+		$obj =& get_instance();
+		$obj->load->model("city_list");
+		$city_data = $obj->city_list->selectCityInfo();
+		$obj->smarty->assign("cityList", $city_data);
+	}
+}
+
 // ------------------------------------------------------------------------
 
 /**

@@ -73,7 +73,7 @@ class Cinema_model extends CI_Model
      */
     public function _getCinemaUrl() {
         //$query = "SELECT d_m_number, c_http FROM " . self::__TBCINEMA;
-        $query = "SELECT d_m_number, c_http FROM " . self::__TBCINEMA . " WHERE c_content=''";
+        $query = "SELECT d_m_number, c_http FROM " . self::__TBCINEMA;//. " WHERE c_content=''"
         $qy = $this->db->query($query);
         return $qy->result();
     }

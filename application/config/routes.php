@@ -50,6 +50,7 @@ $route['deamon/schedule'] = 'deamon/schedule';
 $route['movie/(:any)'] = 'MovieDetail/dispose/$1/$2';
 $route['nowplay'] = 'MovieIndex/dispose';
 $route['list'] = 'MovieList/dispose';
+$route['list/(:num)'] = 'MovieList/dispose/$1';
 $route['nowplay/(:any)'] = 'MovieIndex/dispose/$1';
 $route['login'] = 'login';
 $route['cinema'] = 'CinemaList/dispose';

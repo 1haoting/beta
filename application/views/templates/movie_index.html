@@ -105,12 +105,13 @@
 <h2>热片提醒</h2>
 <div class="mtp10 remind_div">
   <input name="" type="text" class="remind_txt" id="inputphone" value="请输入手机号"  accept=""  onfocus="" onblur="" />
-  <input name="" type="button" id="take" class="remind_btn" value="订阅" onclick="checksubmit()"/>
+  <input name="" type="button" id="take" class="remind_btn" value="订阅" onclick="checksubmit()" style="cursor:pointer"/>
 </div>
 </div>
 </div>
 </div>
 {include file="inc_footer.html"}
+
 <script type="text/javascript">
 //搜索获取失去焦点事件
 $(".search input.txt").focus(function(){
@@ -133,15 +134,14 @@ botNext:'#change_div .a_next'
 $(".ranking_ul li").hover(function(){
   $(this).addClass("on").siblings().removeClass("on");
 });
-$(".city_div").click(function(){
-  $(".city_tc").show();
-  },function(){
-  $(".city_tc").show();  
-  });
+
 //select模拟
 //点击订阅按钮操作
+
 function checksubmit() {
-    var reg = '/^1[3|4|5|8][0-9]{9}$/';
+  {literal}
+    var reg = /^1[3|4|5|8][0-9]\d{4,8}$/;
+  {/literal}
     var phone = $("#inputphone").val();
     phone = $.trim(phone);
     if(!phone) {
@@ -151,12 +151,16 @@ function checksubmit() {
         alert("请输入正确的手机号");
         return false;
     } else {
-        $.post("{$base_url}subscibe/insertsubscibe", 'phone=' + phone, function(data){
+        $.ajaxSetup({
+            async: false
+        });
+        $.post("{base_url()}subscibe/insertsubscibe", 'phone=' + phone, function(data){
             alert(data);
         });
     }
     return false;
 }
 </script>
+
 </body>
 </html>

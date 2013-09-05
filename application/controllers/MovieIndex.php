@@ -37,7 +37,9 @@ class MovieIndex extends CI_Controller {
         $this->load->model('City_List');
         $this->City_List->zh_name = $this->_localCityName;
         $this->city_data = $this->City_List->selectCityInfoByZhName();
-        $this->nowCityId = $this->city_data[0]->d_c_id; 
+        $this->nowCityId = $this->city_data[0]->d_c_id;
+
+        !isset($_COOKIE['d_c_id']) && setcookie("d_c_id", $this->nowCityId, 7*86400, "/");
         } else {
             $this->nowCityId = $cityId;
         }

@@ -66,6 +66,18 @@ class City_List extends CI_Model
     }
 
     /**
+     * get city info by zh name
+     */
+    public function selectCityInfo($begin = '', $end = '')
+    {
+        $where = '';
+        $begin && $end && $where = " WHERE LEFT(zh_name, 1) BETWEEN '" . $begin . "' AND '" . $end . "'";
+        $sql = "SELECT name, d_c_id FROM " . self::__TABLE . $where;
+        $ret = $this->db->query($sql);
+        return $ret->result();
+    }
+
+    /**
      * get city and area info by zh name
      */
     public function selectAreaInfoByParentId()

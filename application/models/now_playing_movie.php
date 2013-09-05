@@ -188,11 +188,11 @@ class Now_playing_movie extends CI_Model
         $field = ", cinema.c_name, cinema.c_address, cinema.c_phone, cinema.c_http ";
         $type && $typeWhere = "cinema_id=" . $obj->id;
         $type && $join = " LEFT JOIN " . self::__TABLE. " movie ON assoc.movie_id = movie.d_id ";
-        $type && $field = ", cinema.c_name, cinema.c_address, cinema.c_phone, cinema.c_http ";*/
+        $type && $field = ", cinema.c_name, cinema.c_address, cinema.c_phone, cinema.c_http ";
         $sql = "SELECT assoc.movie_id, assoc.cinema_id, tbsc.type_id, tbsc.language_id, 
                         tbsc.price, tbsc.s_time, tbsc.day, tbsc.week_day" . $field . " FROM " . self::__TBSCHEDULE . " tbsc 
                             LEFT JOIN " . self::__TBASSOC . " assoc ON tbsc.assoc_id = assoc.id " . $join . " 
-                                WHERE " . $typeWhere . " ORDER BY assoc.cinema_id, tbsc.language_id,tbsc.type_id DESC";
+                                WHERE " . $typeWhere . " ORDER BY assoc.cinema_id, tbsc.language_id,tbsc.type_id DESC";*/
         $query = $this->db->query($sql);
         $result = $query->result();
         return $result;

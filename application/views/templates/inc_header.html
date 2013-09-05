@@ -2,6 +2,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>影票夹</title>
 <link href="{$base_url}css/base.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$base_url}js/jquery-1.4.2.min.js"></script>
+<script src="{$base_url}js/jquery.soChange-min.js" type="text/javascript"></script>
+<script type="text/javascript" src="{$base_url}js/cookies.min.js"></script>
 <script type="text/javascript">
 function AutoResizeImage(maxWidth, maxHeight, objImg) {
     var img = new Image();
@@ -62,9 +65,9 @@ function AutoResizeImage(maxWidth, maxHeight, objImg) {
         </div>
         <div class="city_tab_nr" id="tab_div">
             <div>
-                <ul>
+                <ul id="citylist">
                     {foreach from=$cityList item=cityInfo}
-                    <li><a href="{$base_url}nowplay/{$cityInfo->d_c_id}">{$cityInfo->name}</a></li>
+                    <li><a href="javascript:void(0);" onclick="return setcokie({$cityInfo->d_c_id});return false;">{$cityInfo->name}</a></li>
                     {/foreach}
                 </ul>
             </div>
@@ -99,3 +102,60 @@ function AutoResizeImage(maxWidth, maxHeight, objImg) {
 </ul>
 </div>
 {/if}
+<script type="text/javascript">
+$(".city_div").click(function(){
+  $(".city_tc").show();
+},function(){
+  $(".city_tc").show();  
+});
+
+$(".hot_city_ul li").click(function() {
+    var id = $(this).attr("id");
+    var begin;
+    var end;
+    switch (id) {
+        case 'A':
+            begin = 'a';
+            end = 'g';
+            break;
+        case 'H':
+            begin = 'h';
+            end = 'l';
+            break;
+        case 'M':
+            begin = 'm';
+            end = 'v';
+            break;
+        case 'W':
+            begin = 'w';
+            end = 'z';
+            break;
+        default:
+            break;
+    }
+
+    $.post("{base_url()}loadajax/citylist", 'begin=' + begin + '&end=' + end, function(data) {
+        var listring = '';
+        if (data) {
+            for(var i in data) {
+                listring += "<li><a href='javascript:void(0);' onclick='return setcokie(" + data[i].d_c_id + ");return false;'>" + data[i].name + "</a></li>";
+            }
+        }
+        $("#citylist").html(listring);
+    }, 'json');
+});
+
+//设置cookie
+function setcokie(number) {
+    var dcid = $.cookie('d_c_id');
+    var paths = "{$base_url}";
+    {literal}
+    $.cookie('d_c_id', number,  {'expires': 7, 'path': paths});
+    {/literal}
+    var local = window.location.href;
+    if(local.indexOf(dcid) > -1) local = local.replace(dcid, number);
+    else local = local + "/" + number;
+    window.location.href  = local;
+}
+
+</script>

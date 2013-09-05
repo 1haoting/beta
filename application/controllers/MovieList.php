@@ -27,9 +27,9 @@ class MovieList extends CI_Controller {
      *
      * @return void
      */
-	public function dispose()
+	public function dispose($cityId = null)
 	{
-        $this->getCityId();
+        $this->getCityId($cityId);
 		$this->getNowPlayMovieList();
 		$this->getLaterMovieList();
         $this->showView();
@@ -40,13 +40,14 @@ class MovieList extends CI_Controller {
      *
      * @return void
      */
-    public function getCityId()
+    public function getCityId($cityId)
     {
         $this->localCityName = $this->tools->getLocalCity();
         $this->load->model('City_List');
         $this->City_List->zh_name = $this->localCityName;
         $this->city_data = $this->City_List->selectCityInfoByZhName();
-        $this->localCityId = $this->city_data[0]->d_c_id; 
+        
+        $this->localCityId = $cityId ? $cityId : $this->city_data[0]->d_c_id; 
     }
 
     /**

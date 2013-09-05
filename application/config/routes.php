@@ -50,11 +50,13 @@ $route['deamon/schedule'] = 'deamon/schedule';
 $route['movie/(:any)'] = 'MovieDetail/dispose/$1/$2';
 $route['nowplay'] = 'MovieIndex/dispose';
 $route['list'] = 'MovieList/dispose';
+$route['list/(:num)'] = 'MovieList/dispose/$1';
 $route['nowplay/(:any)'] = 'MovieIndex/dispose/$1';
 $route['login'] = 'login';
 $route['cinema'] = 'CinemaList/dispose';
 $route['cinema/(:num)'] = 'CinemaList/dispose/$1';
 $route['cinema/(:any)'] = 'CinemaList/dispose/$1/$2';
+$route['cinemadetail/(:any)'] = 'CinemaDetail/dispose/$1';
 
 
 /* End of file routes.php */

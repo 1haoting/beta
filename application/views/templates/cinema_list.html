@@ -45,12 +45,12 @@
             <div class="bdm1">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" class="mtp20 video_table">
                     <tbody><tr>
-                            <td width="110"><div class="cinema_img"><a href="#"><img src="{$cinemaInfo->c_imgurl}"></a></div></td>
+                            <td width="110"><div class="cinema_img"><a href="{$base_url}cinemadetail/{$areaInfo->id}"><img src="{$cinemaInfo->c_imgurl}"></a></div></td>
                             <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
                                     <tbody><tr>
                                             <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
                                                     <tbody><tr>
-                                                            <td width="722"><h2><a href="#">{$cinemaInfo->c_name}</a></h2>
+                                                            <td width="722"><h2><a href="{$base_url}cinemadetail/{$cinemaInfo->d_m_number}">{$cinemaInfo->c_name}</a></h2>
                                                                 <p>地址：{$cinemaInfo->c_address}<br>电话：{$cinemaInfo->c_phone}</p></td>
                                                             <td width="100"><span class="f36"><strong>29</strong></span>元起</td>
                                                             <td><a href="#" class="gp">比价购票</a></td>

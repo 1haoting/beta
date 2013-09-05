@@ -105,9 +105,8 @@ class MovieDetail extends CI_Controller {
 			$this->dealInfo[$this->index]['address'] = $value->c_address;
 			$this->dealInfo[$this->index]['phone'] = $value->c_phone;
 			$this->dealInfo[$this->index]['chttp'] = $value->c_http;
-			//$this->dealInfo[$this->index]['imgurl'] = $value->c_imgurl;
-			$this->dealInfo[$this->index]['imgurl'] = "";
-	
+			$this->dealInfo[$this->index]['imgurl'] = $value->c_imgurl;
+			$this->dealInfo[$this->index]['imgurl'] = preg_replace("/img\d.douban.com/", "img2.douban.com", $value->c_imgurl);
 		}
 	}
 
@@ -125,7 +124,7 @@ class MovieDetail extends CI_Controller {
 
 		$this->movieInfo = $this->now_playing_movie->getMovieDetailByMovieId();
 
-		$this->movieInfo[0]->summary = $this->_filterString($this->movieInfo[0]->summary, 900);	
+		$this->movieInfo[0]->summary = $this->_filterString($this->movieInfo[0]->summary, 600);	
 		$this->movieInfo[0]->cast = $this->_filterString($this->movieInfo[0]->cast, 100);
         $this->movieInfo[0]->title = $this->tools->filterMovieName($this->movieInfo[0]);
 	}

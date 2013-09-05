@@ -28,7 +28,6 @@ class CinemaList extends CI_Controller {
 	{
         $this->getCityId($cityId);
 		$this->getCinemaList($cityId, $areaId);
-		//$this->getLaterMovieList();
         $this->showView();
 	}
 
@@ -70,25 +69,10 @@ class CinemaList extends CI_Controller {
             $this->cinema_model->area_id = $areaId;
         }
         $this->areaCinema = $this->cinema_model->getCityInfoByCityAreaId();
+        foreach ($this->areaCinema as $key => &$value) {
+            $value->c_imgurl = preg_replace("/img\d.douban.com/", "img2.douban.com", $value->c_imgurl);
+        }
 		$this->smarty->assign('areaId', $areaId);
-	}
-
-    /**
-     * get later movie list
-     * 
-     * @return void
-     */
-	public function getLaterMovieList()
-	{
-		$this->load->model('Later_movie','later_movie',TRUE);
-		$this->later_movie->city_id = $this->localCityId;
-		$this->laterMovieList = $this->later_movie->getMovieDetailByCityId();
-		foreach ($this->laterMovieList as &$movieDetail) {
-			$movieDetail->summary = $this->tools->filterString($movieDetail->summary, 900);	
-			$movieDetail->cast = $this->tools->filterString($movieDetail->cast, 100);
-            $movieDetail->movie_type = $this->tools->filterMovieType($movieDetail->movie_type, ',');
-            $movieDetail->title = $this->tools->filterMovieName($movieDetail);
-		}
 	}
 
 	public function showView()

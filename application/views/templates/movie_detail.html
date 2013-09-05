@@ -62,7 +62,7 @@
             <ul class="xz_ul left clearfix area" style="width:600px;"><li><a href="javascript:void(0);"
              {if $obj->areaId == 0}class="on"{/if} index="0">全部</a></li>
                 {foreach from=$areaInfo item=areaData}
-                <li>|</li><li><a href="javascript:void(0);" index="{$areaData->id}" {if $obj->areaId == $areaData->id}class="on"{/if}>{$areaData->name}</a></li>
+                <li>|</li><li><a href="javascript:void(0);" index="{$areaData->d_c_id}" {if $obj->areaId == $areaData->id}class="on"{/if}>{$areaData->name}</a></li>
                 {/foreach}
             </ul>
         </div>

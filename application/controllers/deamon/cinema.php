@@ -61,7 +61,7 @@ class Cinema extends CI_Controller {
         $this->index = 0;
         if($this->url_list) {
             foreach ($this->url_list as $key => $value) {
-                if($this->index < 45) {
+                if($this->index < 30) {
                     $intro = file_get_contents($value->c_http);
                     preg_match($this->cinema_imginfo_preg, $intro, $match);
                     isset($match[1]) && preg_match($this->cinema_img_preg, $match[1], $img);

@@ -1,45 +1,19 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>影票夹</title>
-<link href="skin/base.css" rel="stylesheet" type="text/css" />
-</head>
-
-<body>
-<div class="main">
-<!--top-->
-<div class="top clearfix">
-<div class="w980">
-<div class="left">目前已有60个城市  2123家影院在此比价</div>
-<div class="top_right right">您好！欢迎来到影票夹！<a href="#">登录</a>|<a href="#">注册</a>|<a href="#">收藏夹</a></div>
-</div>
-</div>
-<div class="logo_div w980 clearfix">
-<h1 class="logo left"><a href="#"><img src="images/logo.jpg" /></a></h1>
-<div class="city_div left"><span>城市</span><b></b></div>
-<div class="search right"><input name="" type="text" class="txt" value="请输入电影名称"  onfocus="if(this.value=='请输入电影名称'){this.value=''}" onblur="if(this.value==''){this.value='请输入电影名称'}" /><input name="" type="button" class="btn" /></div>
-</div>
-<!--menu-->
-<div class="menu clearfix">
-<div class="w980">
-<ul><li><a href="#">首页</a></li><li><a href="#" class="on">影片</a></li><li><a href="#">影院</a></li></ul>
-</div>
-</div>
+    {include file="inc_header.html" tab="none" type="cinema"}
 <!--main-->
 <div class="w980 clearfix">
-<div class="location">您现在的位置：<a href="#">首页</a>&gt;<a href="#">影片</a>&gt;<span>正在热映</span></div>
+<div class="location">您现在的位置：<a href="{$base_url}nowplay">首页</a>&gt;<a href="{$base_url}cinema">影院</a></div>
 
 <div class="movie_top clearfix">
-<div class="movie_img left"><img src="images/09.jpg" /></div>
+<div class="movie_img left"><img src="{$cinemaInfo->c_imgurl}" onload="AutoResizeImage(163,163,this)"/></div>
 <div class="movie_txt_right right">
 <div class="movie_tt">
-<h1>UME国际影城（安贞店）</h1>
-<p class="mtp10"><a class="gp left" href="#">查看排期</a></p>
+<h1>{$cinemaInfo->c_name}</h1>
 </div>
-<p class="mtp10"><span class="mrt10"><img src="images/pic01.gif"></span><span class="mrt10"><img src="images/pic02.gif"></span><span><img src="images/pic03.gif"></span></p>
-<p>电话：010-58257733</p>
-<p>地址：北京市东城区北三环36号环球贸易中心三期B1/F1/F3 </p>
+<p class="mtp10"><span class="mrt10"><img src="{$base_url}images/pic01.gif"></span><span class="mrt10"><img src="{$base_url}images/pic02.gif"></span><span><img src="{$base_url}images/pic03.gif"></span></p>
+<p>电话：{$cinemaInfo->c_phone}</p>
+<p>地址：{$cinemaInfo->c_address}</p>
 </div>
 </div>
 
@@ -173,11 +147,11 @@
 </div>
 
 <div class="movie_tab_div clearfix">
-    <ul id="tab"><li class="on">放映排期</li><li>影院介绍</li></ul>
+    <ul id="tab"><li class="on" index="cinemapq">放映排期</li><li index="cinema_about">影院介绍</li></ul>
 </div>
 
 <div id="tab_div">
-<div class="mtp10">
+<div class="mtp10" id="cinemapq">
 <p>本放映排期时间仅作参考，具体播放时间以影院实际播放为准</p>
 <div class="movie_search mtp10">
 <div class="clearfix w100">
@@ -392,20 +366,24 @@
 
 </div>
 
-<div>
+<div id="cinema_about">
 <div class="about_div">
 <h2 class="about_h2">详细信息</h2>
-<p>影院地址：北京市东城区北三环36号环球贸易中心三期B1/F1/F3</p>
-<p>影院电话：010-58257733</p>
-<p>乘车路线：乘公交：300路、683路、731路、718路、302路、839路、985路、117路、998路在安贞桥东下车即可</p>
+<p>影院地址：{$cinemaInfo->c_address}</p>
+<p>影院电话：{$cinemaInfo->c_phone}</p>
+<p>乘车路线：{$cinemaInfo->c_riding}</p>
 </div>
 <div class="about_div">
 <h2 class="about_h2">详细介绍</h2>
-<p>影城位于环球贸易中心三期商业楼E座的B1、F1、F3层，影城总面积约5000平方米，共有10个高规格放映厅，共计1450个座位。4个数胶放映厅，10个数字放映厅，4个放映厅可放3D立体影片。是完全按照五星级影院标准建造的多功能影城。 　　在影城的B1层共分布6个放映厅，均为标准厅，共有700个座位，其中包括一个贵宾厅，并设有票房、卖品部及会员专区。1-6厅的银幕全部都是英国哈根尼斯1.4增易银幕，这种高清银幕在目前中国电影院市场的投入也是绝无仅有的。1-6厅的音响环绕采用的是美国JBL，功放是美国皇冠。这些设备代表了世界电影放映音响的最高水平。影厅座椅是由国内知名厂家为UME影城专门设计的，根据每个影厅银幕的尺寸、坡度、视角专门订制。</p>
+<p>{$cinemaInfo->c_content}</p>
 </div>
 <div class="about_div">
 <h2 class="about_h2" style="margin-bottom:0;">影院风采</h2>
-<ul class="yy_tp clearfix"><li><img src="images/11.jpg" /></li><li><img src="images/11.jpg" /></li><li><img src="images/11.jpg" /></li><li><img src="images/11.jpg" /></li><li><img src="images/11.jpg" /></li></ul>
+<ul class="yy_tp clearfix">
+  {foreach $cinemaImgUrl item=imgInfo}
+  <li><img src="{$imgInfo->c_imgurl}" onload="AutoResizeImage(200,200,this)"/></li>
+  {/foreach}
+</ul>
 </div>
 </div>
 
@@ -415,77 +393,76 @@
 
 
 <div class="video_list_right right">
-<div class="right_banner"><a href="#"><img src="images/03.jpg"></a></div>
-<div class="hot_video">
-<div class="hot_video_tt"><span class="right"><a href="#">更多</a></span>其他热门影片</div>
-<div class="hot_video_list clearfix">
-<dl class="right_video clearfix"><dt><a href="#"><img src="images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star02.gif" /><img src="images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star02.gif" /><img src="images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star02.gif" /><img src="images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star02.gif" /><img src="images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star02.gif" /><img src="images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-<dl class="right_video clearfix"><dt><a href="#"><img src="images/08.jpg"></a></dt><dd>2013.03.29</dd><dd><a href="#">厨子戏子痞子</a></dd><dd><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star01.gif" /><img src="images/star02.gif" /><img src="images/star02.gif" /></dd><dd>类型：动作/喜剧/战争</dd><dd>地区：内地</dd><dd>三影帝同台飙戏</dd></dl>
-</div>
-</div>
+    <div class="right_banner"><a href="#"><img src="{$base_url}images/03.jpg"></a></div>
+    <div class="hot_video">
+        <div class="hot_video_tt"><span class="right"><a href="{$base_url}list">更多</a></span>其他热门影片</div>
+        <div class="hot_video_list clearfix">
+            {foreach from=$topMovie key=rank item=topInfo name=foo}
+            <dl class="right_video clearfix">
+                <dt>
+                    <img src="{$base_url}images/{$topInfo->d_id}_small.jpg" onload="AutoResizeImage(60,98,this)"/>
+                </dt>
+                <dd>{$topInfo->pubdate}</dd>
+                <dd><a href="{$base_url}movie/{$topInfo->d_id}/108288">{$topInfo->title}</a></dd>
+                <dd>
+                    {if $topInfo->rating >=0 && $topInfo->rating <2}
+                    <img src="{$base_url}images/star01.gif" />
+                    {elseif $topInfo->rating >2 && $topInfo->rating <4}
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    {elseif $topInfo->rating >4 && $topInfo->rating <6}
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    {elseif $topInfo->rating >6 && $topInfo->rating <8}
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star02.gif" />
+                    {elseif $topInfo->rating >8 && $topInfo->rating <10}
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star01.gif" />
+                    <img src="{$base_url}images/star02.gif" />
+                    {/if}
+                </dd>
+                <dd>类型：{$topInfo->movie_type}</dd>
+                <dd>地区：{$topInfo->country}</dd>
+            </dl>
+            {/foreach}
+        </div>
+    </div>
 </div>
 
 
 </div>
 
 <!--footer-->
-<div class="footer">
-<div class="footer_menu"><a href="#">友情链接</a>|<a href="#">北外网院</a>|<a href="#">北外成功英语</a>|<a href="#">剑桥证书</a>|<a href="#">北外青少英语</a>|<a href="#">北外留学预科</a>|<a href="#">北京外国语大学</a>|<a href="#">外研社</a>|<a href="#">剑桥ESOL考试中心</a>|<a href="#">土豆视频空间</a>|<a href="#">教育团购网</a></div>
-<div class="copyright">
-<p>Copyright©2003 - 2012 wangpiao.com All rights reserved. 影票夹 版权所有  备案编号：110105202京ICP证090693京ICP备10039898号-4</p>
-<p class="mtp10"><a href="#" class="mrt10"><img src="images/copyright_01.gif" /></a><a href="#"><img src="images/copyright_02.gif" /></a></p>
-</div>
-</div>
-</div>
-<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-<script src="js/jquery.soChange-min.js" type="text/javascript"></script>
-<script>
-//搜索获取失去焦点事件
-$(".search input.txt").focus(function(){
-	$(this).parent().addClass("search_on");
-	})
-$(".search input.txt").blur(function(){
-	$(this).parent().removeClass("search_on");
-	})
-$(".search").hover(function(){
-	$(this).addClass("search_on");
-	})
-//tab切换
-$(function(){
- $("#tab_div>div:not(:first)").hide();
- $("#tab li").hover(function(){
-    var index = $("#tab li").index(this);
-    $(this).addClass("on").siblings().removeClass("on");
-    $("#tab_div>div").eq(index).show().siblings().hide();
- });
-});
-//比价
-$(".bjgp").click(function(){
-    var index = $(this).attr('id');
-	$("#list_"+index).toggle();
- });
-//比较展开
-$('.zk_btn').click(function(){
-if($(this).parent().parent().siblings(".video_none").is(":visible")){
-	$(this).parent().parent().siblings(".video_none").hide();
-	$(this).removeClass("zk_btn_on").children("span").text("全部展开")
-	}else{
-	$(this).parent().parent().siblings(".video_none").show();
-	$(this).addClass("zk_btn_on").children("span").text("全部收起")
-		}
-		return false;     				 
-})
-</script>
-<!--[if IE 6]>
-<script type="text/javascript" src="js/ie6png.js"></script>
-</script>
-<script type="text/javascript">
-	DD_belatedPNG.fix('a');
-</script>
- <![endif]-->
+ {include file="inc_footer.html"}
+        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+        <script src="js/jquery.soChange-min.js" type="text/javascript"></script>
+        <script>
+            //搜索获取失去焦点事件
+            $(".search input.txt").focus(function(){
+                $(this).parent().addClass("search_on");
+            })
+            $(".search input.txt").blur(function(){
+                $(this).parent().removeClass("search_on");
+            })
+            $(".search").hover(function(){
+                $(this).addClass("search_on");
+            })
+            //tab切换
+            $(function(){
+             $("#tab_div>div:not(:first)").hide();
+             $("#cinemapq").show();
+             $("#tab li").hover(function(){
+                var index = $(this).attr("index");
+                $(this).addClass("on").siblings().removeClass("on");
+                $("#" + index).show().siblings().hide();
+             });
+            });
+        </script>
 </body>
 </html>

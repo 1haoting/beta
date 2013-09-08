@@ -3,7 +3,7 @@
     {include file="inc_header.html" tab="none" type="cinema"}
     <!--main-->
     <div class="w980 clearfix">
-        <div class="location">您现在的位置：<a href="#">首页</a>&gt;<a href="#">影院</a></div>
+        <div class="location">您现在的位置：<a href="{$base_url}nowplay">首页</a>&gt;<a href="{$base_url}cinema">影院</a></div>
         <div class="cinema_tt_div">{$cityData[0]->name}影院</div>
         <div class="mtp10 cinema_choose clearfix">
             <div class="clearfix cinema_choose_div">
@@ -45,7 +45,7 @@
             <div class="bdm1">
                 <table width="100%" cellspacing="0" cellpadding="0" border="0" class="mtp20 video_table">
                     <tbody><tr>
-                            <td width="110"><div class="cinema_img"><a href="{$base_url}cinemadetail/{$areaInfo->id}"><img src="{$cinemaInfo->c_imgurl}"></a></div></td>
+                            <td width="110"><div class="cinema_img"><a href="{$base_url}cinemadetail/{$cinemaInfo->d_m_number}"><img src="{$cinemaInfo->c_imgurl}" onload="AutoResizeImage(110,100,this)"></a></div></td>
                             <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
                                     <tbody><tr>
                                             <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
@@ -93,12 +93,5 @@
                 $(this).addClass("search_on");
             })
         </script>
-        <!--[if IE 6]>
-        <script type="text/javascript" src="js/ie6png.js"></script>
-    </script>
-    <script type="text/javascript">
-        DD_belatedPNG.fix('a');
-    </script>
-    <![endif]-->
 </body>
 </html>

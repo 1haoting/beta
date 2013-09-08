@@ -2,7 +2,7 @@
 class CinemaDetail extends CI_Controller {
 
     private $cinemaInfo;
-    private $cinemaImgUlr;
+    private $cinemaImgUrl;
     public $cinemaId;
     public $cityId;
     public $typeconfig;
@@ -26,6 +26,7 @@ class CinemaDetail extends CI_Controller {
 		parent::__construct();
 		$this->load->model('Now_playing_movie','now_playing_movie',TRUE);
 		$this->load->model('cinema_model');
+		$this->load->model('cinema_imgurl');
 		$this->config->load("assoc");
 		$this->typeconfig = $this->config->item("typeConfig");
 		$this->language = $this->config->item("language");
@@ -40,7 +41,7 @@ class CinemaDetail extends CI_Controller {
 		$this->getCinemaDetail();
 		$this->getTOPMovieList();
 		$this->getAreaInfo();
-		$this->dealWithMovies();
+		//$this->dealWithMovies();
         $this->showView();
 	}
 
@@ -48,7 +49,6 @@ class CinemaDetail extends CI_Controller {
 	 * Deal with movies
 	*/
 	private function dealWithMovies($type = false) {
-		
 		$ret = $this->now_playing_movie->getMoviePq($this);
 		if ($ret) {
 			$val = $ret[0];
@@ -119,6 +119,12 @@ class CinemaDetail extends CI_Controller {
 	public function getCinemaDetail()
 	{
 		$this->cinemaInfo = $this->cinema_model->getCinemaList($this->cinemaId);
+        $this->cinemaInfo[0]->c_imgurl = preg_replace("/img\d.douban.com/", "img2.douban.com", $this->cinemaInfo[0]->c_imgurl);
+        $this->cityId = $this->cinemaInfo[0]->city_id;
+		$this->cinemaImgUrl = $this->cinema_imgurl->getInfoByCinemaId($this->cinemaId);
+        foreach ($this->cinemaImgUrl as $imgInfo) {
+            $imgInfo->c_imgurl = preg_replace("/img\d.douban.com/", "img2.douban.com", $imgInfo->c_imgurl);
+        }
 	}
 
     /**
@@ -128,6 +134,7 @@ class CinemaDetail extends CI_Controller {
      */
 	public function getTOPMovieList()
 	{
+		$this->now_playing_movie->city_id = $this->cityId;
 		$this->topMovie = $this->now_playing_movie->getTopMovieByCityId();
 		foreach ($this->topMovie as &$movieDetail) {
 			$movieDetail->cast = $this->tools->filterCast($movieDetail->cast, 2);
@@ -143,11 +150,10 @@ class CinemaDetail extends CI_Controller {
 		$this->smarty->assign("language", $this->config->item("language"));
 		$this->smarty->assign('base_url', base_url());
 		$this->smarty->assign('areaInfo',$this->areaInfo);
-		$this->smarty->assign('dealInfo',$this->dealInfo);
-        $this->smarty->assign('movieInfo',$this->movieInfo[0]);
-        $this->smarty->assign('obj',$this);
+        $this->smarty->assign('cinemaInfo',$this->cinemaInfo[0]);
 		$this->smarty->assign('topMovie', $this->topMovie);
-        $this->smarty->view('movie_detail.html');
+		$this->smarty->assign('cinemaImgUrl', $this->cinemaImgUrl);
+        $this->smarty->view('cinema_detail.html');
 	}
 
 	private function _filterString($data, $num)

@@ -50,7 +50,7 @@ function AutoResizeImage(maxWidth, maxHeight, objImg) {
 <div class="logo_div w980 clearfix">
 <h1 class="logo left"><a href="{$base_url}nowplay"><img src="{$base_url}images/logo.jpg" /></a></h1>
 <div class="city_div left">
-    <span>城市</span>
+    <span id="cname">城市</span>
     <b></b>
     <div class="city_tc" style="display:none;">
         <div class="city_tc_top"></div>
@@ -147,15 +147,22 @@ $(".hot_city_ul li").click(function() {
 
 //设置cookie
 function setcokie(number) {
-    var dcid = $.cookie('d_c_id');
-    var paths = "{$base_url}";
-    {literal}
-    $.cookie('d_c_id', number,  {'expires': 7, 'path': paths});
-    {/literal}
+    $.ajaxSetup({
+        async: false
+    });
+    var dcid;
+    $.get("{base_url()}loadajax/setsession", "number="+number, function(data) {
+       dcid = data;
+    });
+    dcid = $.trim(dcid);
     var local = window.location.href;
     if(local.indexOf(dcid) > -1) local = local.replace(dcid, number);
     else local = local + "/" + number;
     window.location.href  = local;
 }
-
+$(document).ready(function() {
+    $.get("{base_url()}loadajax/getname", "", function(data) {
+        $("#cname").html(data);
+    });
+});
 </script>

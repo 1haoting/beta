@@ -10,6 +10,7 @@ class MovieIndex extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+        session_start();
 		$this->load->library('tools');
         $this->load->model('cinema_model');
 	}
@@ -32,14 +33,16 @@ class MovieIndex extends CI_Controller {
      */
     public function getCityId($cityId)
     {
-        if (!isset($cityId)) {
-        $this->_localCityName = $this->tools->getLocalCity();
-        $this->load->model('City_List');
-        $this->City_List->zh_name = $this->_localCityName;
-        $this->city_data = $this->City_List->selectCityInfoByZhName();
-        $this->nowCityId = $this->city_data[0]->d_c_id;
+        if (!isset($cityId) && !isset($_SESSION['d_c_id'])) {
+            $this->_localCityName = $this->tools->getLocalCity();
+            $this->load->model('City_List');
+            $this->City_List->zh_name = $this->_localCityName;
+            $this->city_data = $this->City_List->selectCityInfoByZhName();
+            $this->nowCityId = $this->city_data[0]->d_c_id;
 
-        !isset($_COOKIE['d_c_id']) && setcookie("d_c_id", $this->nowCityId, 7*86400, "/");
+            !isset($_SESSION['d_c_id']) && $_SESSION['d_c_id'] = $this->nowCityId;
+        } elseif(isset($_SESSION['d_c_id'])) {
+            $this->nowCityId = $_SESSION['d_c_id'];
         } else {
             $this->nowCityId = $cityId;
         }

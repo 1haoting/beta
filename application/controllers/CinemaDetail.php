@@ -12,7 +12,7 @@ class CinemaDetail extends CI_Controller {
     public $languageId;
     public $typeId;
     private $cinemaid;
-	private $type_idd;
+	private $type_id;
 	private $language_id;
 	private $day;
 	private $index = 0;
@@ -41,7 +41,7 @@ class CinemaDetail extends CI_Controller {
 		$this->getCinemaDetail();
 		$this->getTOPMovieList();
 		$this->getAreaInfo();
-		//$this->dealWithMovies();
+		$this->dealWithMovies();
         $this->showView();
 	}
 
@@ -49,64 +49,35 @@ class CinemaDetail extends CI_Controller {
 	 * Deal with movies
 	*/
 	private function dealWithMovies($type = false) {
-		$ret = $this->now_playing_movie->getMoviePq($this);
-		if ($ret) {
-			$val = $ret[0];
-			$cinemaid = $val->cinema_id;
-			$this->type_id = $val->type_id;
-			$this->language_id = $val->language_id;
-			$this->day = $val->day;
-			
-			foreach ($ret as $key => $value) {
-				if($value->cinema_id == $cinemaid) {
-					$this->joinDealInfoOne($value, $type);
-				} else {
-					$cinemaid = $value->cinema_id;
-					$this->index++;
-					$this->number = 0;
-					$this->joinDealInfoOne($value, $type);
-				}
-				
-			}
-		}
-	}
-
-	/**
-	 * join dealinfo one
-	*/
-	private function joinDealInfoOne($value, $type) {
-		
-		if ($value->type_id == $this->type_id
-				&& $value->language_id == $this->language_id
-					&& $value->day == $this->day) {
-			
-			$this->joinDealInfoTwo($value, $type);
-		} else {
-			$this->type_id = $value->type_id;
-			$this->language_id = $value->language_id;
-			$this->day = $value->day;
-			$this->number++;
-			$this->joinDealInfoTwo($value, $type);
-		}
-	}
-
-	/**
-	 * join dealinfo two
-	*/
-	private function joinDealInfoTwo($value, $type) {
-		$this->dealInfo[$this->index]['m_time'][$this->number]['type'] = @$this->typeconfig[$value->type_id];
-		$this->dealInfo[$this->index]['m_time'][$this->number]['language'] = @$this->language[$value->language_id];
-		$this->dealInfo[$this->index]['m_time'][$this->number]['day'] = ($value->day == 1) ? "今天" : "明天";
-		
-		$this->dealInfo[$this->index]['m_time'][$this->number]['s_time'][] = $value->s_time;
-		if(!$type) {
-			$this->dealInfo[$this->index]['name'] = $value->c_name;
-			$this->dealInfo[$this->index]['price'] = $value->price;
-			$this->dealInfo[$this->index]['address'] = $value->c_address;
-			$this->dealInfo[$this->index]['phone'] = $value->c_phone;
-			$this->dealInfo[$this->index]['chttp'] = $value->c_http;
-			$this->dealInfo[$this->index]['imgurl'] = preg_replace("/img\d.douban.com/", "img2.douban.com", $value->c_imgurl);	
-		}
+        $filterMovieInfo = array();
+        $this->params = new stdClass();
+        $this->params->cinemaId = $this->cinemaId;
+        $this->params->dayId = $this->dayId;
+        $this->params->languageId = $this->languageId;
+        $this->params->typeId = $this->typeId;
+        $this->params->cityId = $this->cityId;
+		$ret = $this->now_playing_movie->getCinemaPq($this->params);
+        foreach ($ret as $movieInfo) {
+            $nowType = @$this->typeconfig[$movieInfo->type_id];
+            $nowLanguage =  @$this->language[$movieInfo->language_id];
+            $key = $nowType . '_' . $nowLanguage;
+            $filterMovieInfo[$movieInfo->movie_id]['cinema_id'] = $movieInfo->cinema_id; 
+ //           $filterMovieInfo[$movieInfo->movie_id]['type_id'] = @$this->typeconfig[$movieInfo->type_id]; 
+ //           $filterMovieInfo[$movieInfo->movie_id]['language_id'] = @$this->language[$movieInfo->language_id]; 
+            $filterMovieInfo[$movieInfo->movie_id]['price'] = $movieInfo->price; 
+            $filterMovieInfo[$movieInfo->movie_id]['day'] = $movieInfo->day; 
+            $filterMovieInfo[$movieInfo->movie_id]['alt_title'] = $movieInfo->alt_title; 
+            $filterMovieInfo[$movieInfo->movie_id]['country'] = $movieInfo->country; 
+            $filterMovieInfo[$movieInfo->movie_id]['director'] = $movieInfo->director; 
+            $filterMovieInfo[$movieInfo->movie_id]['cast'] = $movieInfo->cast; 
+            $filterMovieInfo[$movieInfo->movie_id]['movie_type'] = $movieInfo->movie_type; 
+            $filterMovieInfo[$movieInfo->movie_id]['s_time'][$key]['type'] = $nowType;
+            $filterMovieInfo[$movieInfo->movie_id]['s_time'][$key]['language'] = $nowLanguage;
+            $filterMovieInfo[$movieInfo->movie_id]['s_time'][$key]['time'][] = $movieInfo->s_time; 
+            $filterMovieInfo[$movieInfo->movie_id]['s_time'][$key]['time'] = array_unique($filterMovieInfo[$movieInfo->movie_id]['s_time'][$key]['time']);
+        }
+		$this->smarty->assign('dealInfo',$filterMovieInfo);
+		$this->smarty->assign('obj',$this->params);
 	}
 
 	/**

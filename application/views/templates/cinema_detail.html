@@ -156,214 +156,72 @@
 <div class="movie_search mtp10">
 <div class="clearfix w100">
 <p class="left m3">排期时间：</p>
-    <ul class="xz_ul left clearfix" style="width:auto;"><li><a href="#" class="on">今天(2013-04-03星期三)</a></li>
+      <input type="hidden" id="pqtime" value="{$obj->dayId}"/>
+      <ul class="xz_ul left clearfix pqtime" style="width:auto;">
+      <li><a href="javascript:void(0);"  {if $obj->dayId == 1}class="on"{/if} index="1">今天</a></li>
       <li>|</li>
-      <li><a href="#">明天(2013-04-04星期四)</a></li>
-    </ul>
+      <li><a href="javascript:void(0);" index="2" {if $obj->dayId == 2}class="on"{/if}>明天</a></li>
+      </ul>
     </div>
 <div class="clearfix w100">
 <p class="left m3">语言类型：</p>
-    <ul class="xz_ul left clearfix" style="width:auto;"><li><a href="#" class="on">全部</a></li>
-      <li>|</li>
-      <li><a href="#">中文</a></li>
-      <li>|</li>
-      <li><a href="#">原声</a></li>
+    <input type="hidden" id="language" value="{$obj->languageId}"/>
+    <ul class="xz_ul left clearfix language" style="width:auto;"><li><a href="javascript:void(0);" {if $obj->languageId == 0}class="on"{/if} index="0">全部</a></li>
+    {foreach from=$language key=ky item=lg}
+    <li>|</li><li><a href="javascript:void(0);" index="{$ky}" {if $obj->languageId == $ky}class="on"{/if}>{$lg}</a></li>
+    {/foreach}
     </ul>
     </div>
 <div class="clearfix w100">
 <p class="left m3">版本选择：</p>
-    <ul class="xz_ul left clearfix" style="width:auto;"><li><a href="#" class="on">全部</a></li>
-      <li>|</li>
-      <li><a href="#">2D</a></li>
-      <li>|</li>
-      <li><a href="#">3D</a></li>
-      <li>|</li>
-      <li><a href="#">巨幕</a></li>
+    <input type="hidden" id="type" value="{$obj->typeId}"/>
+    <ul class="xz_ul left clearfix type" style="width:auto;">
+    <li><a href="javascript:void(0);" {if $obj->typeId == 0}class="on"{/if} index="0">全部</a></li>
+    {foreach from=$type item=tp key=ky}
+    <li>|</li><li><a href="javascript:void(0);" index="{$ky}" {if $obj->typeId == $ky}class="on"{/if}>{$tp}</a></li>
+    {/foreach}
     </ul>
     </div>
 </div>
-
-<div class="clearfix video_list_div">
-    <div class="movie_video left"><img src="images/10.jpg" /></div>
-    <div class="movie_right_div right">
-    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="video_table">
-  <tr>
-    <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
-  <tr>
-    <td><h2><a href="#">钢铁侠3</a></h2>
-    <p>地区: 美国<br />导演: 沙恩.布莱克<br />主演: 小罗伯特.唐尼 格温妮斯.帕特洛 盖.皮尔斯 本.金斯利 唐.钱德尔<br />类型：言情</p></td>
-    <td width="90"><p><a class="gp bjgp" href="#bj">比价购票</a></p><p class="mtp10"><a href="#" class="gp2">在线选座</a></p></td>
-  </tr>
-</table>
-</td>
-  </tr>
-  <tr>
-  <td><div class="mtp10"><span class="language_video left"><b>2D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>2D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-</table>
-    </div>
-    
-    </div>
+{if $dealInfo}
+{foreach from=$dealInfo key=k item=val}
     <div class="clearfix video_list_div">
-    <div class="movie_video left"><img src="images/10.jpg" /></div>
+    <div class="movie_video left"><img src="{$base_url}images/{$k}_large.jpg" onload="AutoResizeImage(140,200,this)"/></div>
     <div class="movie_right_div right">
     <table width="100%" cellspacing="0" cellpadding="0" border="0" class="video_table">
   <tr>
     <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
   <tr>
-    <td><h2><a href="#">钢铁侠3</a></h2>
-    <p>地区: 美国<br />导演: 沙恩.布莱克<br />主演: 小罗伯特.唐尼 格温妮斯.帕特洛 盖.皮尔斯 本.金斯利 唐.钱德尔<br />类型：言情</p></td>
+    <td><h2><a href="#">{$val['alt_title']}</a></h2>
+    <p>地区: {$val['country']}<br />导演: {$val['director']}<br />主演: {$val['cast']}<br />类型：{$val['movie_type']}</p></td>
     <td width="90"><p><a class="gp bjgp" href="#bj">比价购票</a></p><p class="mtp10"><a href="#" class="gp2">在线选座</a></p></td>
   </tr>
 </table>
 </td>
   </tr>
+  {foreach from=$val['s_time'] key=n item=v}
   <tr>
-  <td><div class="mtp10"><span class="language_video left"><b>2D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
+  <td>
+    <div class="mtp10">
+      <span class="language_video left"><b>{$v['type']}</b>{$v['language']}</span>
+      <ul class="left video_time">
+        {foreach from=$v['time'] key=index item=time}
+         {if $index != 0}
+        <li>|</li>
+        {/if}
+        <li>{$time}</li>
+        {/foreach}
+      </ul>
+    </div>
+  </td>
   </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>2D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
+  {/foreach}
 </table>
     </div>
     
     </div>
-    <div class="clearfix video_list_div">
-    <div class="movie_video left"><img src="images/10.jpg" /></div>
-    <div class="movie_right_div right">
-    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="video_table">
-  <tr>
-    <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
-  <tr>
-    <td><h2><a href="#">钢铁侠3</a></h2>
-    <p>地区: 美国<br />导演: 沙恩.布莱克<br />主演: 小罗伯特.唐尼 格温妮斯.帕特洛 盖.皮尔斯 本.金斯利 唐.钱德尔<br />类型：言情</p></td>
-    <td width="90"><p><a class="gp bjgp" href="#bj">比价购票</a></p><p class="mtp10"><a href="#" class="gp2">在线选座</a></p></td>
-  </tr>
-</table>
-</td>
-  </tr>
-  <tr>
-  <td><div class="mtp10"><span class="language_video left"><b>2D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>2D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-</table>
-    </div>
-    
-    </div>
-    <div class="clearfix video_list_div">
-    <div class="movie_video left"><img src="images/10.jpg" /></div>
-    <div class="movie_right_div right">
-    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="video_table">
-  <tr>
-    <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
-  <tr>
-    <td><h2><a href="#">钢铁侠3</a></h2>
-    <p>地区: 美国<br />导演: 沙恩.布莱克<br />主演: 小罗伯特.唐尼 格温妮斯.帕特洛 盖.皮尔斯 本.金斯利 唐.钱德尔<br />类型：言情</p></td>
-    <td width="90"><p><a class="gp bjgp" href="#bj">比价购票</a></p><p class="mtp10"><a href="#" class="gp2">在线选座</a></p></td>
-  </tr>
-</table>
-</td>
-  </tr>
-  <tr>
-  <td><div class="mtp10"><span class="language_video left"><b>2D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>2D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-</table>
-    </div>
-    
-    </div>
-    <div class="clearfix video_list_div">
-    <div class="movie_video left"><img src="images/10.jpg" /></div>
-    <div class="movie_right_div right">
-    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="video_table">
-  <tr>
-    <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
-  <tr>
-    <td><h2><a href="#">钢铁侠3</a></h2>
-    <p>地区: 美国<br />导演: 沙恩.布莱克<br />主演: 小罗伯特.唐尼 格温妮斯.帕特洛 盖.皮尔斯 本.金斯利 唐.钱德尔<br />类型：言情</p></td>
-    <td width="90"><p><a class="gp bjgp" href="#bj">比价购票</a></p><p class="mtp10"><a href="#" class="gp2">在线选座</a></p></td>
-  </tr>
-</table>
-</td>
-  </tr>
-  <tr>
-  <td><div class="mtp10"><span class="language_video left"><b>2D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>2D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-</table>
-    </div>
-    
-    </div>
-    <div class="clearfix video_list_div">
-    <div class="movie_video left"><img src="images/10.jpg" /></div>
-    <div class="movie_right_div right">
-    <table width="100%" cellspacing="0" cellpadding="0" border="0" class="video_table">
-  <tr>
-    <td><table width="100%" cellspacing="0" cellpadding="0" border="0">
-  <tr>
-    <td><h2><a href="#">钢铁侠3</a></h2>
-    <p>地区: 美国<br />导演: 沙恩.布莱克<br />主演: 小罗伯特.唐尼 格温妮斯.帕特洛 盖.皮尔斯 本.金斯利 唐.钱德尔<br />类型：言情</p></td>
-    <td width="90"><p><a class="gp bjgp" href="#bj">比价购票</a></p><p class="mtp10"><a href="#" class="gp2">在线选座</a></p></td>
-  </tr>
-</table>
-</td>
-  </tr>
-  <tr>
-  <td><div class="mtp10"><span class="language_video left"><b>2D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>2D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>中文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-  <tr>
-  <td><div class="mtp5"><span class="language_video left"><b>3D</b>英文</span><ul class="left video_time"><li>09:30</li><li>|</li><li>10:30</li><li>|</li><li class="red">11:30</li><li>|</li><li>12:30</li><li>|</li><li class="red">13:30</li><li>|</li><li>14:00</li><li>|</li><li>14:10</li><li>|</li><li>14:30</li></ul></div></td>
-  </tr>
-</table>
-    </div>
-    
-    </div>
-
+{/foreach}
+{/if}
 </div>
 
 <div id="cinema_about">
@@ -440,8 +298,6 @@
 
 <!--footer-->
  {include file="inc_footer.html"}
-        <script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
-        <script src="js/jquery.soChange-min.js" type="text/javascript"></script>
         <script>
             //搜索获取失去焦点事件
             $(".search input.txt").focus(function(){
@@ -462,7 +318,60 @@
                 $(this).addClass("on").siblings().removeClass("on");
                 $("#" + index).show().siblings().hide();
              });
+
+
+              $(".pqtime li a").click(function(){
+                  var that = this;
+                  $(that).parents("ul").find("li a").each(function() {
+                      $(this).removeClass("on");
+                  });
+                  $(that).addClass("on");
+                  $("#pqtime").val($(that).attr("index"));
+                  joinLocalUrl();
+              });
+
+              $(".language li a").click(function(){
+                  var that = this;
+                  $(that).parents("ul").find("li a").each(function() {
+                      $(this).removeClass("on");
+                  });
+                  $(that).addClass("on");
+                  $("#language").val($(that).attr("index"));
+                  joinLocalUrl();
+              });
+
+              $(".type li a").click(function(){
+                  var that = this;
+                  $(that).parents("ul").find("li a").each(function() {
+                      $(this).removeClass("on");
+                  });
+                  $(that).addClass("on");
+                  $("#type").val($(that).attr("index"));
+                  joinLocalUrl();
+              });
             });
+
+        function joinLocalUrl() {
+            var path = [];
+            var url = window.location.href;
+            var urlArray = url.split("/");
+            var index = 0;
+            for(var i in urlArray) {
+                path.push(urlArray[i]);
+                if(urlArray[i] == 'movie') {
+                    index = 1;
+                }
+                if(index > 2)  break;
+                else if(index > 0) index++;
+            }
+            path = path.join("/");
+            
+            var pqtime = $(".pqtime .on").attr("index");
+            var language = $(".language .on").attr("index");
+            var type = $(".type .on").attr("index");
+            path += "/" + pqtime + "/" + language + "/" + type;
+            window.location.href = path;
+        }
         </script>
 </body>
 </html>

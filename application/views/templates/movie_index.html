@@ -53,9 +53,9 @@
 <table width="100%" border="0" cellspacing="0" bgcolor="#ffffff" cellpadding="0" class="cinema_table">
   {foreach from=$topCinema item=cinema}
   <tr>
-    <td><span class="cinema_title"><a href="#">{$cinema->c_name}</a></span></td>
+    <td><span class="cinema_title"><a href="{$base_url}cinemadetail/{$cinema->d_m_number}">{$cinema->c_name}</a></span></td>
     <td><span class="mrt10"><img src="{$base_url}images/pic01.gif" /></span><span class="mrt10"><img src="{$base_url}images/pic02.gif" /></span><span><img src="{$base_url}images/pic03.gif" /></span></td>
-    <td><a class="right xq" href="">点击详情</a></td>
+    <td><a class="right xq" href="{$base_url}cinemadetail/{$cinema->d_m_number}">点击详情</a></td>
   </tr>
   {/foreach}
 </table>
@@ -67,15 +67,18 @@
 <!--right-->
 <div class="index_main_right mtp10 right">
 <div class="bj_div">
-<div class="bj_tt">快速比价</div>
+<div class="bj_tt">推荐电影院</div>
 <div class="bj_div_n">
-<p>请选择城市，区域</p>
-<div class="select_box mtp40 select_div"><input type="text" value="全部区域" readonly="readonly"><ul><li>自定义区域</li><li>自定义区域</li><li>自定义区域</li></ul></div>
-<p>请选择城市，区域</p>
-<div class="select_box mtp40 select_div"><input type="text" value="全部电影" readonly="readonly"><ul><li>自定义电影</li><li>自定义电影</li><li>自定义电影</li></ul></div>
-<p class="mtp10"><input name="" type="button" class="bj_btn" /></p>
-<p class="mtp10"><strong>推荐电影院</strong></p>
-<ul class="hot_ul"><li class="li_one"><a href="#">特种部队</a></li><li class="li_two"><a href="#">致我们终将逝去的青春</a></li><li class="li_three"><a href="#">北京遇上西雅图</a></li></ul>
+<p></p>
+<div class="select_box mtp40 select_div"></div>
+<p></p>
+<div class="select_box mtp40 select_div"></div>
+<p class="mtp10"></p>
+<p class="mtp10"><strong></strong></p>
+<ul class="">
+  {foreach from=$topCinema item=cinema}
+  <li><a href="{$base_url}cinemadetail/{$cinema->d_m_number}">{$cinema->c_name}</a></li>
+  {/foreach}
 </div>
 </div>
 
@@ -104,8 +107,7 @@
 <div class="remind">
 <h2>热片提醒</h2>
 <div class="mtp10 remind_div">
-  <input name="" type="text" class="remind_txt" id="inputphone" value="请输入手机号"  accept=""  onfocus="" onblur="" />
-  <input name="" type="button" id="take" class="remind_btn" value="订阅" onclick="checksubmit()" style="cursor:pointer"/>
+  <input name="" type="text" class="remind_txt" id="inputphone" value="请输入手机号"  onfocus="{literal}if(this.value=='请输入手机号'){this.value=''}{/literal}" onblur="{literal}if(this.value==''){this.value='请输入手机号'}{/literal}"/><input name="" type="button" id="take" class="remind_btn" value="订阅" onclick="checksubmit()" style="cursor:pointer"/>
 </div>
 </div>
 </div>

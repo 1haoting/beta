@@ -44,7 +44,7 @@ function AutoResizeImage(maxWidth, maxHeight, objImg) {
 <div class="top clearfix">
 <div class="w980">
 <div class="left">目前已有306个城市  2123家影院在此比价</div>
-<div class="top_right right">您好！欢迎来到影票夹！<a href="{$base_url}login">登录</a>|<a href="{$base_url}login">注册</a>|<a href="">收藏夹</a></div>
+<!--<div class="top_right right">您好！欢迎来到影票夹！<a href="{$base_url}login">登录</a>|<a href="{$base_url}login">注册</a>|<a href="">收藏夹</a></div>-->
 </div>
 </div>
 <div class="logo_div w980 clearfix">
@@ -65,16 +65,18 @@ function AutoResizeImage(maxWidth, maxHeight, objImg) {
         </div>
         <div class="city_tab_nr" id="tab_div">
             <div>
-                <ul id="citylist">
+                <ul id="citylist" id="hot_city">
                     {foreach from=$cityList item=cityInfo}
-                    <li><a href="javascript:void(0);" onclick="return setcokie({$cityInfo->d_c_id});return false;">{$cityInfo->name}</a></li>
+                        {if $cityInfo->name == "北京" || $cityInfo->name == "上海" || $cityInfo->name == "广州" || $cityInfo->name == "深圳" || $cityInfo->name == "天津" || $cityInfo->name == "苏州" || $cityInfo->name == "重庆" || $cityInfo->name == "杭州" || $cityInfo->name == "无锡" || $cityInfo->name == "成都"}
+                            <li><a href="javascript:void(0);" onclick="return setcokie({$cityInfo->d_c_id});return false;">{$cityInfo->name}</a></li>
+                        {/if}
                     {/foreach}
                 </ul>
             </div>
         </div>
     </div>
 </div>
-<div class="search right"><input name="" type="text" class="txt" value="请输入电影名称"  onfocus="" onblur="" /><input name="" type="button" class="btn" /></div>
+<!--<div class="search right"><input name="" type="text" class="txt" value="请输入电影名称"  onfocus="" onblur="" /><input name="" type="button" class="btn" /></div>-->
 </div>
 <!--menu-->
 <div class="menu clearfix">
@@ -113,6 +115,7 @@ $(".hot_city_ul li").click(function() {
     var id = $(this).attr("id");
     var begin;
     var end;
+    var hot;
     switch (id) {
         case 'A':
             begin = 'a';

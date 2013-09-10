@@ -121,7 +121,7 @@ class Cinema_model extends CI_Model
     public function getTopCinemaList() {
         $sql = 'SELECT * FROM ' . self::__TBCINEMA;
         $where = ' WHERE city_id = ' . $this->city_id;
-        $where .= ' ORDER BY RAND() LIMIT 5';
+        $where .= ' ORDER BY RAND() LIMIT 10';
         $query = $sql . $where;
         $ret = $this->db->query($query);
         return $ret->result();
